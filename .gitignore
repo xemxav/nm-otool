@@ -2,6 +2,12 @@
 ft_nm
 ft_otool
 
+#subject
+*.pdf
+
+# IDE
+.idea/
+
 # Prerequisites
 *.d
 
