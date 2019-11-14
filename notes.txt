@@ -1,0 +1,8 @@
+A regarder :
+	* Mach-O File Format
+	* https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/MachORuntime/Reference/reference.html
+	* MachOView
+	* #include /usr/include/mach-o/loader.h
+	* #include /usr/include/mach-o/nlist.h
+	* man nm
+
