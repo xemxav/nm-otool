@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   nm.h                                             .::    .:/ .      .::   */
+/*   ft_nm.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/14 13:16:55 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/14 13:16:55 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/15 15:01:13 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/15 15:01:13 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#include "../includes/ft_nm.h"
 
-#ifndef FT_NM_H
-# define FT_NM_H
-
-# include "../libft/includes/libft.h"
-# include <sys/mman.h>
-# include <sys/stat.h>
-# include <mach-o/loader.h>
-# include <mach-o/nlist.h>
+int			main(int ac, char **av)
+{
+	ft_printf("je compile\n");
+	return (0);
+}
 
 
-
-#endif
