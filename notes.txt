@@ -6,3 +6,64 @@ A regarder :
 	* #include /usr/include/mach-o/nlist.h
 	* man nm
 
+Man nm :
+
+Nm displays the name list (symbol table) of each object file in the argument list.  If an argument is an archive, a listing for each object file in the archive will be produced.
+
+ Each symbol name is preceded by its value (blanks if undefined).
+
+ exemple archive :
+
+libft/libft.a(ft_strstr.o):
+0000000000000000 T _ft_strstr
+
+libft/libft.a(ft_strsub.o):
+                 U _ft_strnew
+0000000000000000 T _ft_strsub
+
+libft/libft.a(ft_strtrim.o):
+00000000000001d0 t _ft_countwsend
+0000000000000140 t _ft_countwsstart
+                 U _ft_strdup
+                 U _ft_strlen
+                 U _ft_strnew
+0000000000000000 T _ft_strtrim
+
+Each symbol name is preceded by its value (blanks if undefined).  Unless the -m option is specified, this value is followed by one of the following characters, representing the symbol type:
+U (undefined),
+A (absolute),
+T (text section symbol),
+D (data  section  symbol),
+B (bss  section symbol),
+C (common symbol),
+S (symbol in a section other than those above),
+or I (indirect symbol).
+If the symbol is local (non-external), the symbol's type is instead represented by the corresponding low-ercase letter.
+A lower case u in a dynamic shared library indicates a undefined reference to a private external in another module in the same library.
+
+If the symbol is a Objective C method, the symbol name is +-[Class_name(category_name) method:name:], where `+' is for class methods, `-' is for instance methods, and (category_name) is present only when the method is in a category.
+
+The output is sorted alphabetically by default.
+
+Usage :
+
+si fichier is dir
+	ft_nm: dir: Is a directory.
+si fichier pas object file :
+	ft_nm: src/ft_nm.c The file was not recognized as a valid object file
+
+
+Strategie :
+
+Pour chaque argument (si pas argument checker a.out) :
+
+Pour chaque argument :
+1) open permet d'obtenir le fd
+	a) checker avec fstat la taille et le type
+	b) mmap sur le fd
+
+2) determiner le magic number -> prendre un uint32_t et checker de quelle type il est.
+		a) permet de savoir quelle type de struct il faut utiliser
+		b) on check filetype pour savoir quelle type de fichier grace aux define dans loader.h
+
+3)
