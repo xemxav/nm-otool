@@ -1,40 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   nm.h                                             .::    .:/ .      .::   */
+/*   usages.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/14 13:16:55 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/14 13:16:55 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/18 17:41:01 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/18 17:41:01 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#include "../includes/ft_nm.h"
 
-#ifndef FT_NM_H
-# define FT_NM_H
-
-# include "../libft/includes/libft.h"
-# include <sys/mman.h>
-# include <sys/stat.h>
-# include <mach-o/loader.h>
-# include <mach-o/nlist.h>
-
-typedef struct s_manager
+int			usage(char prog,char *bad_name)
 {
-	char		*filename;
-	char 		*file;
-	int 		fd;
-	struct stat	buf;
-}				t_manager;
-
-/*
- *			usages.c
- */
-int					usage(char * prog, char *bad_name);
-/*
- *			utils.c
- */
-int					free_manager(t_manager *manager)
-#endif
+	fd_printf(2, "%s: %s: No such file or directory\n", prog, bad_name);
+	return (TRUE);
+}
