@@ -29,12 +29,17 @@ typedef struct s_manager
 	struct stat	buf;
 }				t_manager;
 
+
+int 				nm(t_manager *manager);
 /*
- *			usages.c
+ *			commons.c
  */
-int					usage(char * prog, char *bad_name);
+int					usage(char *prog, char *bad_name, char *dirname);
+int					get_mapping(t_manager *manager);
+int					open_file(char *name, char *prog, int func(t_manager *));
+
 /*
  *			utils.c
  */
-int					free_manager(t_manager *manager)
+int					free_manager(t_manager *manager, int ret);
 #endif

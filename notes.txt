@@ -67,3 +67,5 @@ Pour chaque argument :
 		b) on check filetype pour savoir quelle type de fichier grace aux define dans loader.h
 
 3)
+
+nm fonctionne sur lien symbolique
