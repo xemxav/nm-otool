@@ -15,7 +15,16 @@
 
 int 		nm(t_manager *manager)
 {
-	printf("coucou\n");
+	uint32_t	magic;
+	struct mach_header_64 *header;
+
+	magic = *(uint32_t*)manager->file;
+	if (magic == MH_MAGIC_64)
+	{
+		header = (struct mach_header_64*)manager->file;
+		printf("file type = %#x\n", header->filetype);
+	}
+	printf("magic = %#x\n", *(int*)ft_memrev(&magic, 1, 4));
 	return (TRUE);
 }
 
