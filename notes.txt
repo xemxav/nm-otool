@@ -6,6 +6,8 @@ A regarder :
 	* #include /usr/include/mach-o/nlist.h
 	* man nm
 
+	https://elearning.intra.42.fr/notions/nm-otool/subnotions/nm-otool-nm/videos/nm-otool-e8e558d7-991e-4de5-91af-c2f3d728d857
+
 Man nm :
 
 Nm displays the name list (symbol table) of each object file in the argument list.  If an argument is an archive, a listing for each object file in the archive will be produced.
@@ -58,9 +60,7 @@ Strategie :
 Pour chaque argument (si pas argument checker a.out) :
 
 Pour chaque argument :
-1) open permet d'obtenir le fd
-	a) checker avec fstat la taille et le type
-	b) mmap sur le fd
+
 
 2) determiner le magic number -> prendre un uint32_t et checker de quelle type il est.
 		a) permet de savoir quelle type de struct il faut utiliser
@@ -73,3 +73,18 @@ nm fonctionne sur lien symbolique
 besoin de determiner tous les formats de fichier lu par nm et leur magic correspondant
 
 on peut trouver les different magic dans les .h des includes
+
+deux types d'objects files :
+	- Mach-O
+		- comprend les binaires compilés
+		- les fichiers objet .o
+	- Universal Binaries / Fat Files (ont un header avant le mach-o header du prenier mach-o)
+		-> /usr/include/mach-o/fat.h FAT_MAGIC       0xcafebabe
+		-> peut avoir differente architecture
+	- les archives .a
+		-> voir le magic dans ar.h
+
+
+load commands == une table des matières, pour savoir a quel offset sont les differents segement,
+On veut savoir ou est load commands de LC_SYM_TAB
+les load commands commencent juste apres le header

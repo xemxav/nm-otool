@@ -227,6 +227,7 @@ struct mach_header_64 {
 struct load_command {
 	uint32_t cmd;		/* type of load command */
 	uint32_t cmdsize;	/* total size of command in bytes */
+	uint32_t cmdsize;	/* total size of command in bytes */
 };
 
 /*
