@@ -27,6 +27,10 @@ typedef struct	s_manager
 	char 		*file;
 	int 		fd;
 	struct stat	buf;
+	int 		swap;
+	int 		header_size;
+	int 		segment_size;
+	int 		section_size; //pas forcement lié au file car peut avoir diff architechture
 }				t_manager;
 
 typedef struct	s_symbol
