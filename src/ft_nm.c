@@ -14,18 +14,37 @@
 #include <mach-o/nlist.h>
 #include "../includes/ft_nm.h"
 
-int 		read_symtab(struct symtab_command *lc, t_manager *manager)
+int			get_section(uint8_t n_sect, t_manager *manager))
+{
+
+}
+
+int 		get_symbol(t_symbol *symbol, uint8_t n_type, uint8_t n_sect, t_manager *manager)
+{
+	if ((n_type & N_TYPE) == N_UNDF)
+		*symbol->sym_name = 'U';
+	if ((n_type & N_TYPE) == N_SECT)
+		get_section(n_sect, manager);
+	return (TRUE);
+}
+
+int 		read_symtab(struct symtab_command *sym, t_manager *manager)
 {
 	int 	i;
 	struct nlist_64 *el;
 	char			*stringtable;
+	t_symbol		symbol;
 
-	el = (struct nlist_64 *)(manager->file + lc->symoff);
-	stringtable = manager->file + lc->stroff;
+	el = (struct nlist_64 *)(manager->file + sym->symoff);
+	stringtable = manager->file + sym->stroff;
 	i = 0;
-	while (i < lc->nsyms)
+
+	while (i < sym->nsyms)
 	{
-		ft_printf("%s\n", stringtable + el[i].n_un.n_strx);
+		ft_bzero(&symbole, sizeof(t_symbol));
+		symbol.sym_name = stringtable + el[i].n_un.n_strx;
+		get_symbol(&symbol, el[i].n_type , el[i].n_sect, manager);
+		ft_printf("type = %#x, %s\n", el[i].n_type & N_TYPE, stringtable + el[i].n_un.n_strx);
 		i++;
 	}
 	return (TRUE);
@@ -36,16 +55,16 @@ int			handle_64(t_manager *manager)
 	struct mach_header_64	*header;
 	struct load_command		*lc;
 	int 					i;
-	struct symtab_command	*sym;
 
 	i = 0;
 	header = (struct mach_header_64*)manager->file;
 	lc = (struct load_command*)((void*)manager->file + sizeof(struct mach_header_64));
 	while (i < header->ncmds)
 	{
+//		enregistré dans manager le offset pour le header et ncmds pour ne pas devoir jouer avec les types
 		if (lc->cmd == LC_SYMTAB)
 		{
-			sym = (struct symtab_command*)lc;
+			read_symtab((struct symtab_command*)lc, manager);
 			break ;
 		}
 		lc = (void*)lc + lc->cmdsize;
@@ -59,7 +78,6 @@ int 		nm(t_manager *manager)
 	uint32_t	magic;
 
 	magic = *(uint32_t*)manager->file;
-	printf("magic = %#x\n", *(int*)ft_memrev(&magic, 1, 4));
 	if (magic == MH_MAGIC_64)
 	{
 		handle_64(manager);

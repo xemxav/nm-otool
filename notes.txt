@@ -86,5 +86,27 @@ deux types d'objects files :
 
 
 load commands == une table des matières, pour savoir a quel offset sont les differents segement,
-On veut savoir ou est load commands de LC_SYM_TAB
-les load commands commencent juste apres le header
+On veut savoir ou est load commands de LC_SYMTAB
+les load commands commencent juste apres le header, toujours la meme taille, donc si on sait
+la taille du header (en fonction du magic ?) on sait ou se deplacer pour iterer dessus
+on avance ensuite de lc->cmdsize
+
+
+une fois qu'on a le symbol representé par une struct nlist qui se situe à file + struct symtab_64 sym + sym->symoff
+
+on a le nom du symbol dans la stringtable donné par file + sym+stroff
+pour chaque n_list ( leur nombre est dans sym->nsyms)
+	on imprime son nom qui se situe à stringtable + el[i].n_un.n_strx
+	on check son type en appliquand le masque binaire N_TYPE sur le el[i].ntype
+		N_UNDF	0x0		/* undefined, n_sect == NO_SECT */
+			Afficher U
+        N_ABS	0x2		/* absolute, n_sect == NO_SECT */
+        N_SECT	0xe		/* defined in section number n_sect */
+
+        	il faut retrouver la lc qui a le numero de section donné par el[i].n_sect
+        	ca sera la lc ou lc->cmd == LC_SEGMENT (strut segment_command) ou nsects < el[i].n_sect
+			il faut pointé une struct section_64 sur file + segment_command->fileoff puis d'avancer du nombre de section voulu
+			on affiche le symbole en fonction du sectname (?)
+
+        N_PBUD	0xc		/* prebound undefined (defined in a dylib) */
+        N_INDR	0xa		/* indirect */

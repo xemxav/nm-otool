@@ -21,13 +21,20 @@
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 
-typedef struct s_manager
+typedef struct	s_manager
 {
 	char		*filename;
 	char 		*file;
 	int 		fd;
 	struct stat	buf;
 }				t_manager;
+
+typedef struct	s_symbol
+{
+	uint32_t	*value;
+	char 		*sym_type;
+	char 		*sym_name;
+}				t_symbol;
 
 
 int 				nm(t_manager *manager);
