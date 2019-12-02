@@ -26,9 +26,10 @@ typedef struct	s_manager
 	char		*filename;
 	char 		*file;
 	int 		fd;
-	struct stat	buf;
+	struct stat	buf; //verifier si besoin de le garder dans le manager
 	int 		swap;
 	int 		header_size;
+	uint32_t	ncmds;
 	int 		segment_size;
 	int 		section_size; //pas forcement lié au file car peut avoir diff architechture
 }				t_manager;
