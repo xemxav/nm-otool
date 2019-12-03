@@ -8,6 +8,8 @@ A regarder :
 
 	https://elearning.intra.42.fr/notions/nm-otool/subnotions/nm-otool-nm/videos/nm-otool-e8e558d7-991e-4de5-91af-c2f3d728d857
 
+http://math-atlas.sourceforge.net/devel/assembly/MachORuntime.pdf#page=47&zoom=100,0,300
+
 Man nm :
 
 Nm displays the name list (symbol table) of each object file in the argument list.  If an argument is an archive, a listing for each object file in the archive will be produced.
@@ -110,3 +112,52 @@ pour chaque n_list ( leur nombre est dans sym->nsyms)
 
         N_PBUD	0xc		/* prebound undefined (defined in a dylib) */
         N_INDR	0xa		/* indirect */
+
+
+int			read_lc_segment(struct segment_command_64 *segment, char *file)
+{
+	int i = 0;
+	struct section_64 *section;
+	ft_printf("segname = %s et nsects = %d\n", segment->segname, segment->nsects);
+	section = (struct section_64*)((void*)segment + sizeof(struct segment_command_64));
+	while (i < segment->nsects)
+	{
+		ft_printf("sec num: %d sectname = %s, segname = %s\n", i + 1, section[i].sectname, section[i].segname);
+		i++;
+	}
+	return (TRUE);
+}
+
+int			handle_64(t_manager *manager)
+{
+	struct mach_header_64	*header;
+	struct load_command		*lc;
+	int 					i;
+//	;
+
+	i = 0;
+	header = (struct mach_header_64*)manager->file;
+	lc = (struct load_command*)((void*)manager->file + sizeof(struct mach_header_64));
+	manager->ncmds = header->ncmds;
+	while (i < header->ncmds)
+	{
+		ft_printf("lc->cmd : %#x\n", lc->cmd);
+		if (lc->cmd == LC_SEGMENT_64)
+			read_lc_segment((struct segment_command_64*)lc, manager->file);
+//		if (lc->cmd == LC_SYMTAB);
+//			read_symtan();
+		lc = (void*)lc + lc->cmdsize;
+		i++;
+	}
+	return (TRUE);
+}
+
+	while (i < manager->symtab->nsyms)
+	{
+		ft_bzero(&symbol, sizeof(t_symbol));
+		symbol.sym_name = stringtable + el[i].n_un.n_strx;
+//		get_symbol(&symbol, el[i].n_type , el[i].n_sect, manager);
+		ft_printf("value = %#.16x ,type = %#x, %s\n", el[i].n_value, el[i].n_type & N_TYPE, stringtable + el[i].n_un.n_strx);
+		i++;
+	}
+	return (TRUE);

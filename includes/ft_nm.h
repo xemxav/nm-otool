@@ -28,7 +28,9 @@ typedef struct	s_manager
 	int 		fd;
 	struct stat	buf; //verifier si besoin de le garder dans le manager
 	int 		swap;
-	int 		header_size;
+	int 		_64;
+	struct symtab_command		*symtab;
+	size_t		header_size;
 	uint32_t	ncmds;
 	int 		segment_size;
 	int 		section_size; //pas forcement lié au file car peut avoir diff architechture
@@ -36,9 +38,10 @@ typedef struct	s_manager
 
 typedef struct	s_symbol
 {
-	uint32_t	*value;
-	char 		*sym_type;
+	uint64_t	value;
+	char 		sym_type;
 	char 		*sym_name;
+	u_int8_t	ext;
 }				t_symbol;
 
 
