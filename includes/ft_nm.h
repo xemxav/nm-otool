@@ -21,6 +21,14 @@
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 
+typedef struct		s_symbol
+{
+	uint64_t		value;
+	char 			sym_type;
+	char 			*sym_name;
+	struct s_symbol	*next;
+}					t_symbol;
+
 typedef struct	s_manager
 {
 	char		*filename;
@@ -32,17 +40,8 @@ typedef struct	s_manager
 	struct symtab_command		*symtab;
 	size_t		header_size;
 	uint32_t	ncmds;
-	int 		segment_size;
-	int 		section_size; //pas forcement lié au file car peut avoir diff architechture
+	struct s_symbol *symbol_list;
 }				t_manager;
-
-typedef struct	s_symbol
-{
-	uint64_t	value;
-	char 		sym_type;
-	char 		*sym_name;
-	u_int8_t	ext;
-}				t_symbol;
 
 
 int 				nm(t_manager *manager);
