@@ -69,16 +69,44 @@ void		print_symbols_64(t_manager *manager)
 	symbol = manager->symbol_list;
 	while (symbol != NULL)
 	{
-		ft_printf("%.16x %c %s\n", symbol->value, symbol->sym_type, symbol->sym_name);
+		if (symbol->sym_type != 'u' &&  symbol->sym_type != 'U')
+			ft_printf("%.16llx", symbol->value);
+		else
+			ft_printf("                ");
+		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
 		symbol = symbol->next;
+	}
+}
+
+void		insert_symbol(t_manager *manager, t_symbol *new)
+{
+	t_symbol	*first;
+	t_symbol	*second;
+
+	first = manager->symbol_list;
+	second = first->next;
+	while (first->next != NULL && ft_strcmp(first->sym_name, new->sym_name) < 0
+		   && ft_strcmp(second->sym_name, new->sym_name) <= 0)
+	{
+		first = first->next;
+		second = first->next;
+	}
+	if (first == manager->symbol_list)
+	{
+		manager->symbol_list = new;
+		new->next = first;
+	}
+	else
+	{
+		new->next = first->next;
+		first->next = new;
 	}
 }
 
 int			record_symbol(t_manager *manager, t_symbol *symbol)
 {
 	t_symbol	*new;
-	t_symbol	*first;
-	t_symbol	*second;
+
 
 	if ((new = (t_symbol*)malloc(sizeof(t_symbol))) == NULL)
 		return (ERROR);
@@ -87,24 +115,7 @@ int			record_symbol(t_manager *manager, t_symbol *symbol)
 		manager->symbol_list = new;
 	else
 	{
-		first = manager->symbol_list;
-		second = first->next;
-		while (first->next != NULL && ft_strcmp(first->sym_name, new->sym_name) < 0
-			&& ft_strcmp(second->sym_name, new->sym_name) <= 0)
-		{
-			first = first->next;
-			second = first->next;
-		}
-		if (first == manager->symbol_list)
-		{
-			manager->symbol_list = new;
-			new->next = first;
-		}
-		else
-		{
-			new->next = first->next;
-			first->next = new;
-		}
+		insert_symbol(manager, new);
 	}
 	return (TRUE);
 }
