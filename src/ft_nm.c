@@ -83,24 +83,18 @@ void		insert_symbol(t_manager *manager, t_symbol *new)
 	t_symbol	*first;
 	t_symbol	*second;
 
-	first = manager->symbol_list;
-	second = first->next;
-	while (first->next != NULL && ft_strcmp(first->sym_name, new->sym_name) < 0
-		   && ft_strcmp(second->sym_name, new->sym_name) <= 0)
+	first = NULL;
+	second = manager->symbol_list;
+	while (second != NULL && ft_strcmp(second->sym_name, new->sym_name) < 0)
 	{
-		first = first->next;
-		second = first->next;
+		first = second;
+		second = second->next;
 	}
-	if (first == manager->symbol_list)
-	{
-		manager->symbol_list = new;
-		new->next = first;
-	}
-	else
-	{
-		new->next = first->next;
+	new->next = second;
+	if (first)
 		first->next = new;
-	}
+	else
+		manager->symbol_list = new;
 }
 
 int			record_symbol(t_manager *manager, t_symbol *symbol)
