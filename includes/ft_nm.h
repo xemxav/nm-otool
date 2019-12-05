@@ -20,6 +20,11 @@
 # include <sys/stat.h>
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
+# include <ar.h>
+# include <mach-o/fat.h>
+
+
+//#define	ARMAG		"!<arch>\n"
 
 typedef struct		s_symbol
 {

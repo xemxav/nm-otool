@@ -33,9 +33,48 @@ int							find_lc_symtab(t_manager *manager)
 	return (FALSE);
 }
 
-int							nm(t_manager *manager)
+
+//	checker les magic
+//	si MH_MAGIC_64 partir sur handle 64
+//	si magic autre, partir sur l'etude du header et rappeller nm sur ce fichier
+
+int							study_arch(t_manager *manager)
+{
+	//pointe sur le bon endroit
+		study_magic(manager);
+}
+
+int							study_magic(t_manager *manager)
 {
 	uint32_t				magic;
+
+	magic = *(uint32_t*)manager->file;
+	if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
+	{
+		find_lc_symtab(manager);
+		read_symtab_64(manager);
+	}
+	else if (magic == MH_MAGIC || magic == MH_CIGAM)
+	{
+		find_lc_symtab(manager);
+		read_symtab_32(manager);
+	}
+	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
+		study_arch(manager);
+	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
+	{
+		study_fat_32(manager);
+	}
+	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
+	{
+		study_fat_64(manager);
+	}
+	return (TRUE);
+}
+
+int							nm(t_manager *manager)
+{
+
 	struct mach_header_64	*header64;
 
 	magic = *(uint32_t*)manager->file;
