@@ -85,7 +85,12 @@ void		insert_symbol(t_manager *manager, t_symbol *new)
 
 	first = NULL;
 	second = manager->symbol_list;
-	while (second != NULL && ft_strcmp(second->sym_name, new->sym_name) < 0)
+	while (second != NULL && ft_strcmp(second->sym_name, new->sym_name) <= 0)
+	{
+		first = second;
+		second = second->next;
+	}
+	if (second != NULL && ft_strcmp(second->sym_name, new->sym_name) == 0 && new->value > second->value)
 	{
 		first = second;
 		second = second->next;
