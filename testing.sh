@@ -5,12 +5,13 @@ NM_PERSO="./ft_nm"
 
 test_nm()
 {
-    (eval ${NM_PERSO} $1) > my_result
-    (eval ${NM} $1) > off_result
-    diff my_result off_result
+  echo $1
+  (eval ${NM_PERSO} $1) > my_result
+  (eval ${NM} $1) > off_result
+  diff my_result off_result
     if [ $? -eq 0 ]
     then
-      echo 'ok'
+      echo ' ok'
       rm my_result
       rm off_result
     else
@@ -19,4 +20,4 @@ test_nm()
 
 }
 
-test_nm 'ft_nm'
+test_nm $1

@@ -13,7 +13,7 @@
 
 #include "../includes/ft_nm.h"
 
-int			usage(char *prog, char *bad_name, char *dirname)
+int				usage(char *prog, char *bad_name, char *dirname)
 {
 	if (bad_name)
 		fd_printf(2, "%s: %s: No such file or directory.\n", prog, bad_name);
@@ -22,15 +22,15 @@ int			usage(char *prog, char *bad_name, char *dirname)
 	return (TRUE);
 }
 
-int		get_mapping(t_manager *manager)
+int				get_mapping(t_manager *manager)
 {
 	if ((manager->file = (char*)mmap(0, (size_t)manager->buf.st_size,
-									 PROT_READ, MAP_PRIVATE, manager->fd, 0)) == MAP_FAILED)
+			PROT_READ, MAP_PRIVATE, manager->fd, 0)) == MAP_FAILED)
 		return (ERROR);
 	return (TRUE);
 }
 
-int		open_file(char *name, char *prog, int func(t_manager *))
+int				open_file(char *name, char *prog, int func(t_manager *))
 {
 	t_manager	manager;
 	int			ret;

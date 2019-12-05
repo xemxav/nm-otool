@@ -45,15 +45,25 @@ typedef struct	s_manager
 
 
 int 				nm(t_manager *manager);
+
 /*
  *			commons.c
  */
 int					usage(char *prog, char *bad_name, char *dirname);
 int					get_mapping(t_manager *manager);
 int					open_file(char *name, char *prog, int func(t_manager *));
-
+/*
+ *			nm_64.c
+ */
+int 				read_symtab_64(t_manager *manager);
+/*
+ *			symnols_64.c
+ */
+int			record_symbol_64(t_manager *manager, t_symbol *symbol);
+void		print_symbols_64(t_manager *manager);
 /*
  *			utils.c
  */
 int					free_manager(t_manager *manager, int ret);
+t_symbol 			*free_symbols(t_symbol *head);
 #endif
