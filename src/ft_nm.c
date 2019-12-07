@@ -13,6 +13,19 @@
 
 #include "../includes/ft_nm.h"
 
+void					study_type(t_symbol *symbol, uint8_t n_type)
+{
+	uint8_t				type;
+
+	type = n_type & N_TYPE;
+	if (type == N_UNDF || type == N_PBUD)
+		symbol->sym_type += 'U';
+	else if (type == N_ABS)
+		symbol->sym_type += 'A';
+	else if (type == N_INDR)
+		symbol->sym_type += 'S';
+}
+
 int							find_lc_symtab(t_manager *manager)
 {
 	int						i;
@@ -33,61 +46,64 @@ int							find_lc_symtab(t_manager *manager)
 	return (FALSE);
 }
 
+int			handle_64(t_manager *manager)
+{
+	struct mach_header_64	*header64;
+
+	header64 = (struct mach_header_64*)manager->file;
+	if (*(uint32_t*)manager->file ==MH_CIGAM_64)
+		manager->swap = 1;
+	manager->_64 = 1; // surement inutile
+	manager->header_size = sizeof(struct mach_header_64);
+	manager->ncmds = header64->ncmds;
+	if (find_lc_symtab(manager) && read_symtab_64(manager))
+		return (TRUE);
+	return (FALSE);
+}
+
+int			handle_32(t_manager *manager)
+{
+	struct mach_header	*header;
+
+	header = (struct mach_header*)manager->file;
+	if (*(uint32_t*)manager->file ==MH_CIGAM)
+		manager->swap = 1;
+	manager->header_size = sizeof(struct mach_header);
+	manager->ncmds = header->ncmds;
+	if (find_lc_symtab(manager) && read_symtab_32(manager))
+		return (TRUE);
+	return (FALSE);
+}
 
 //	checker les magic
 //	si MH_MAGIC_64 partir sur handle 64
 //	si magic autre, partir sur l'etude du header et rappeller nm sur ce fichier
 
-int							study_arch(t_manager *manager)
-{
-	//pointe sur le bon endroit
-		study_magic(manager);
-}
+//int							study_arch(t_manager *manager)
+//{
+//	//pointe sur le bon endroit
+//		study_magic(manager);
+//}
 
-int							study_magic(t_manager *manager)
+int							nm(t_manager *manager)
 {
 	uint32_t				magic;
 
 	magic = *(uint32_t*)manager->file;
 	if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
-	{
-		find_lc_symtab(manager);
-		read_symtab_64(manager);
-	}
+		return (handle_64(manager));
 	else if (magic == MH_MAGIC || magic == MH_CIGAM)
-	{
-		find_lc_symtab(manager);
-		read_symtab_32(manager);
-	}
-	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
-		study_arch(manager);
-	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
-	{
-		study_fat_32(manager);
-	}
-	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
-	{
-		study_fat_64(manager);
-	}
-	return (TRUE);
-}
-
-int							nm(t_manager *manager)
-{
-
-	struct mach_header_64	*header64;
-
-	magic = *(uint32_t*)manager->file;
-	if (magic == MH_MAGIC_64)
-	{
-		header64 = (struct mach_header_64*)manager->file;
-		manager->_64 = 1;
-		manager->header_size = sizeof(struct mach_header_64);
-		manager->ncmds = header64->ncmds;
-	}
-	find_lc_symtab(manager);
-	if (manager->_64)
-		read_symtab_64(manager);
+		return (handle_32(manager));
+//	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
+//		study_arch(manager);
+//	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
+//	{
+//		study_fat_32(manager);
+//	}
+//	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
+//	{
+//		study_fat_64(manager);
+//	}
 	return (TRUE);
 }
 

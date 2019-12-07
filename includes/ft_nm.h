@@ -50,7 +50,7 @@ typedef struct	s_manager
 
 
 int 				nm(t_manager *manager);
-
+void				study_type(t_symbol *symbol, uint8_t n_type);
 /*
  *			commons.c
  */
@@ -61,6 +61,10 @@ int					open_file(char *name, char *prog, int func(t_manager *));
  *			nm_64.c
  */
 int 				read_symtab_64(t_manager *manager);
+/*
+ *			nm_32.c
+ */
+int 				read_symtab_32(t_manager *manager);
 /*
  *			symnols_64.c
  */
