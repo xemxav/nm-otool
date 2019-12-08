@@ -75,15 +75,6 @@ int			handle_32(t_manager *manager)
 	return (FALSE);
 }
 
-//	checker les magic
-//	si MH_MAGIC_64 partir sur handle 64
-//	si magic autre, partir sur l'etude du header et rappeller nm sur ce fichier
-
-//int							study_arch(t_manager *manager)
-//{
-//	//pointe sur le bon endroit
-//		study_magic(manager);
-//}
 
 int							nm(t_manager *manager)
 {
