@@ -20,6 +20,7 @@
 # include <sys/stat.h>
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
+# include <mach/machine.h>
 # include <ar.h>
 # include <mach-o/fat.h>
 
@@ -38,6 +39,7 @@ typedef struct	s_manager
 {
 	char		*filename;
 	char 		*file;
+	char 		*file_tmp;
 	int 		fd;
 	struct stat	buf; //verifier si besoin de le garder dans le manager
 	int 		swap;
@@ -66,13 +68,20 @@ int 				read_symtab_64(t_manager *manager);
  */
 int 				read_symtab_32(t_manager *manager);
 /*
+ *			nm_fat.c
+ */
+int			study_fat_64(t_manager *manager);
+int			study_fat_32(t_manager *manager);
+/*
  *			symnols_64.c
  */
+
 int			record_symbol_64(t_manager *manager, t_symbol *symbol);
 void		print_symbols_64(t_manager *manager);
 /*
  *			utils.c
  */
+void 				*swap(void *tmp, void *value, size_t size);
 int					free_manager(t_manager *manager, int ret);
 t_symbol 			*free_symbols(t_symbol *head);
 #endif

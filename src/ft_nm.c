@@ -87,14 +87,14 @@ int							nm(t_manager *manager)
 		return (handle_32(manager));
 //	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
 //		study_arch(manager);
-//	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
-//	{
-//		study_fat_32(manager);
-//	}
-//	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
-//	{
-//		study_fat_64(manager);
-//	}
+	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
+	{
+		study_fat_32(manager);
+	}
+	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
+	{
+		study_fat_64(manager);
+	}
 	return (TRUE);
 }
 

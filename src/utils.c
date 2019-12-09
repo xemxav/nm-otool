@@ -13,6 +13,14 @@
 
 #include "../includes/ft_nm.h"
 
+void		*swap(void *tmp, void *value, size_t size)
+{
+	ft_memcpy(tmp, value, size);
+	if (ft_memrev(tmp, sizeof(char), size) == NULL)
+		return (NULL);
+	return (tmp);
+}
+
 t_symbol		*free_symbols(t_symbol *head)
 {
 	t_symbol	*tmp;
