@@ -33,7 +33,27 @@ void			print_symbols_64(t_manager *manager)
 	manager->symbol_list = NULL;
 }
 
-static void		insert_symbol_64(t_manager *manager, t_symbol *new)
+void			print_symbols_32(t_manager *manager)
+{
+	t_symbol	*symbol;
+	t_symbol	*tmp;
+
+	symbol = manager->symbol_list;
+	while (symbol != NULL)
+	{
+		if (symbol->sym_type != 'u' && symbol->sym_type != 'U')
+			ft_printf("%.8llx", symbol->value);
+		else
+			ft_printf("%8c", ' ');
+		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
+		tmp = symbol;
+		symbol = symbol->next;
+		free(tmp);
+	}
+	manager->symbol_list = NULL;
+}
+
+static void		insert_symbol(t_manager *manager, t_symbol *new)
 {
 	t_symbol	*first;
 	t_symbol	*second;
@@ -58,7 +78,7 @@ static void		insert_symbol_64(t_manager *manager, t_symbol *new)
 		manager->symbol_list = new;
 }
 
-int				record_symbol_64(t_manager *manager, t_symbol *symbol)
+int				record_symbol(t_manager *manager, t_symbol *symbol)
 {
 	t_symbol	*new;
 
@@ -69,7 +89,7 @@ int				record_symbol_64(t_manager *manager, t_symbol *symbol)
 		manager->symbol_list = new;
 	else
 	{
-		insert_symbol_64(manager, new);
+		insert_symbol(manager, new);
 	}
 	return (TRUE);
 }

@@ -65,14 +65,21 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 		if ((section = find_section_64(el->n_sect, manager)) == NULL)
 			return (ERROR);
 		symbol->sym_type = section->sectname[2];
+		if (!ft_strchr(SECT, symbol->sym_type))
+		{
+			symbol->sym_type = 's';
+//			ft_printf("sec name = %s ,",section->sectname);
+//			ft_printf("name = %s, sec = %d, type = %x\n",stringtable + el->n_un.n_strx, el->n_sect, el->n_type & N_TYPE);
+		}
 	}
 	else
 		study_type(symbol, el->n_type);
 	if (el->n_type & N_EXT && symbol->sym_type >= 97)
 		symbol->sym_type -= 32;
+
 	symbol->sym_name = stringtable + el->n_un.n_strx;
 	symbol->value = el->n_value;
-	if (record_symbol_64(manager, symbol) == ERROR)
+	if (record_symbol(manager, symbol) == ERROR)
 		return (ERROR);
 	return (TRUE);
 }

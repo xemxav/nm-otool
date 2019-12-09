@@ -27,6 +27,8 @@
 
 //#define	ARMAG		"!<arch>\n"
 
+#define SECT "tdb"
+
 typedef struct		s_symbol
 {
 	uint64_t		value;
@@ -43,7 +45,6 @@ typedef struct	s_manager
 	int 		fd;
 	struct stat	buf; //verifier si besoin de le garder dans le manager
 	int 		swap;
-	int 		_64;
 	struct symtab_command		*symtab;
 	size_t		header_size;
 	uint32_t	ncmds;
@@ -70,14 +71,16 @@ int 				read_symtab_32(t_manager *manager);
 /*
  *			nm_fat.c
  */
-int			study_fat_64(t_manager *manager);
-int			study_fat_32(t_manager *manager);
+int					study_fat_64(t_manager *manager);
+int					study_fat_32(t_manager *manager);
 /*
  *			symnols_64.c
  */
 
-int			record_symbol_64(t_manager *manager, t_symbol *symbol);
-void		print_symbols_64(t_manager *manager);
+int					record_symbol(t_manager *manager, t_symbol *symbol);
+void				print_symbols_64(t_manager *manager);
+void				print_symbols_32(t_manager *manager);
+
 /*
  *			utils.c
  */

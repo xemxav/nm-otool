@@ -13,11 +13,15 @@
 
 #include "../includes/ft_nm.h"
 
-void					study_type(t_symbol *symbol, uint8_t n_type)
+void					study_type(t_symbol *symbol, uint8_t n_type, int swapping)
 {
 	uint8_t				type;
+	uint8_t				s_nype;
 
-	type = n_type & N_TYPE;
+	if (swapping)
+		type = *(uint8_t*)swap(&s_nype, &n_type, sizeof(uint8_t)) & N_TYPE;
+	else
+		type = n_type & N_TYPE;
 	if (type == N_UNDF || type == N_PBUD)
 		symbol->sym_type += 'U';
 	else if (type == N_ABS)
@@ -30,6 +34,7 @@ int							find_lc_symtab(t_manager *manager)
 {
 	int						i;
 	struct load_command		*lc;
+	uint32_t			s_cmdsize;
 
 	i = 0;
 	lc = (struct load_command*)((void*)manager->file + manager->header_size);
@@ -40,7 +45,11 @@ int							find_lc_symtab(t_manager *manager)
 			manager->symtab = (struct symtab_command*)lc;
 			return (TRUE);
 		}
-		lc = (void*)lc + lc->cmdsize;
+		if (manager->swap)
+			lc = (void*)lc + *(uint32_t*)swap(&s_cmdsize,
+					&lc->cmdsize, sizeof(uint32_t));
+		else
+			lc = (void*)lc + lc->cmdsize;
 		i++;
 	}
 	return (FALSE);
@@ -48,14 +57,19 @@ int							find_lc_symtab(t_manager *manager)
 
 int			handle_64(t_manager *manager)
 {
-	struct mach_header_64	*header64;
+	struct mach_header_64	*header;
+	uint32_t			s_ncmds;
 
-	header64 = (struct mach_header_64*)manager->file;
+	header = (struct mach_header_64*)manager->file;
 	if (*(uint32_t*)manager->file ==MH_CIGAM_64)
+	{
 		manager->swap = 1;
-	manager->_64 = 1; // surement inutile
+		manager->ncmds = *(uint32_t*)swap(&s_ncmds,
+				&header->ncmds, sizeof(uint32_t));
+	}
+	else
+		manager->ncmds = header->ncmds;
 	manager->header_size = sizeof(struct mach_header_64);
-	manager->ncmds = header64->ncmds;
 	if (find_lc_symtab(manager) && read_symtab_64(manager))
 		return (TRUE);
 	return (FALSE);
@@ -64,12 +78,18 @@ int			handle_64(t_manager *manager)
 int			handle_32(t_manager *manager)
 {
 	struct mach_header	*header;
+	uint32_t			s_ncmds;
 
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file ==MH_CIGAM)
+	{
 		manager->swap = 1;
+		manager->ncmds = *(uint32_t*)swap(&s_ncmds,
+				&header->ncmds, sizeof(uint32_t));
+	}
+	else
+		manager->ncmds = header->ncmds;
 	manager->header_size = sizeof(struct mach_header);
-	manager->ncmds = header->ncmds;
 	if (find_lc_symtab(manager) && read_symtab_32(manager))
 		return (TRUE);
 	return (FALSE);

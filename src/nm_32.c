@@ -70,7 +70,7 @@ int						fill_symbol_32(t_symbol *symbol, t_manager *manager,
 		symbol->sym_type -= 32;
 	symbol->sym_name = stringtable + el->n_un.n_strx;
 	symbol->value = el->n_value;
-	if (record_symbol_64(manager, symbol) == ERROR)
+	if (record_symbol(manager, symbol) == ERROR)
 		return (ERROR);
 	return (TRUE);
 }
@@ -89,6 +89,6 @@ int						read_symtab_32(t_manager *manager)
 			fill_symbol_32(&symbol, manager, &el[i]);
 		i++;
 	}
-	print_symbols_64(manager);
+	print_symbols_32(manager);
 	return (TRUE);
 }

@@ -15,13 +15,32 @@
 
 int			study_fat_64(t_manager *manager)
 {
-	struct fat_header	*header;
-//	u_int32_t 			tmp;
+	struct fat_header		*header;
+	struct fat_arch_64		*arch;
+	uint32_t 				tmp;
+	uint64_t 				tmp2;
+	cpu_type_t 				tmp3;
+	int 					i;
 
+	i = 0;
 	if (!manager->file_tmp)
 		manager->file_tmp = manager->file;
 	header = (struct fat_header*)manager->file_tmp;
-	printf("fat 64 nombre de structs : %u\n", header->nfat_arch);
+	if (swap(&tmp, &header->nfat_arch, sizeof(uint32_t)) == NULL)
+		return (ERROR);
+	arch = (struct fat_arch_64*)(header + 1);
+	while (i < tmp)
+	{
+		if (*(cpu_type_t*)swap(&tmp3, &arch[i].cputype,sizeof(cpu_type_t))
+			== CPU_TYPE_X86_64)
+		{
+			manager->file = manager->file_tmp +
+					*(uint64_t*)(swap(&tmp2, &arch[i].offset,sizeof(uint64_t)));
+			nm(manager);
+		}
+		i++;
+	}
+	manager->file = manager->file_tmp;
 	return (TRUE);
 }
 
@@ -46,7 +65,8 @@ int			study_fat_32(t_manager *manager)
 		if (*(cpu_type_t*)swap(&tmp3, &arch[i].cputype,sizeof(cpu_type_t))
 		== CPU_TYPE_X86_64)
 		{
-			manager->file = manager->file_tmp + *(uint32_t*)(swap(&tmp2, &arch[i].offset,sizeof(uint32_t)));
+			manager->file = manager->file_tmp +
+					*(uint32_t*)(swap(&tmp2, &arch[i].offset,sizeof(uint32_t)));
 			nm(manager);
 		}
 		i++;
