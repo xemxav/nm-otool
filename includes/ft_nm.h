@@ -29,31 +29,31 @@
 
 #define SECT "tdb"
 
-typedef struct		s_symbol
+typedef struct				s_symbol
 {
-	uint64_t		value;
-	char 			sym_type;
-	char 			*sym_name;
-	struct s_symbol	*next;
-}					t_symbol;
+	uint64_t				value;
+	char 					sym_type;
+	char 					*sym_name;
+	struct s_symbol			*next;
+}							t_symbol;
 
 typedef struct	s_manager
 {
-	char		*filename;
-	char 		*file;
-	char 		*file_tmp;
-	int 		fd;
-	struct stat	buf; //verifier si besoin de le garder dans le manager
-	int 		swap;
-	struct symtab_command		*symtab;
-	size_t		header_size;
-	uint32_t	ncmds;
-	struct s_symbol *symbol_list;
-}				t_manager;
+	char					*filename;
+	char 					*file;
+	char 					*file_tmp;
+	int 					fd;
+	struct stat				buf; //verifier si besoin de le garder dans le manager
+	int 					swap;
+	struct symtab_command	*symtab;
+	size_t					header_size;
+	uint32_t				ncmds;
+	struct s_symbol 		*symbol_list;
+}							t_manager;
 
 
 int 				nm(t_manager *manager);
-void				study_type(t_symbol *symbol, uint8_t n_type);
+void				study_type(t_symbol *symbol, uint8_t n_type, int swapping);
 /*
  *			commons.c
  */
@@ -74,13 +74,15 @@ int 				read_symtab_32(t_manager *manager);
 int					study_fat_64(t_manager *manager);
 int					study_fat_32(t_manager *manager);
 /*
+ *			study_lib.c
+ */
+int					study_lib(t_manager *manager);
+/*
  *			symnols_64.c
  */
-
 int					record_symbol(t_manager *manager, t_symbol *symbol);
 void				print_symbols_64(t_manager *manager);
 void				print_symbols_32(t_manager *manager);
-
 /*
  *			utils.c
  */

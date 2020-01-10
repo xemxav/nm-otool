@@ -73,7 +73,7 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 		}
 	}
 	else
-		study_type(symbol, el->n_type);
+		study_type(symbol, el->n_type, manager->swap);
 	if (el->n_type & N_EXT && symbol->sym_type >= 97)
 		symbol->sym_type -= 32;
 

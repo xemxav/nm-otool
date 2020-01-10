@@ -65,7 +65,7 @@ int						fill_symbol_32(t_symbol *symbol, t_manager *manager,
 		symbol->sym_type = section->sectname[2];
 	}
 	else
-		study_type(symbol, el->n_type);
+		study_type(symbol, el->n_type, manager->swap);
 	if (el->n_type & N_EXT && symbol->sym_type >= 97)
 		symbol->sym_type -= 32;
 	symbol->sym_name = stringtable + el->n_un.n_strx;

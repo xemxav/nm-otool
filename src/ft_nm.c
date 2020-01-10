@@ -105,8 +105,8 @@ int							nm(t_manager *manager)
 		return (handle_64(manager));
 	else if (magic == MH_MAGIC || magic == MH_CIGAM)
 		return (handle_32(manager));
-//	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
-//		study_arch(manager);
+	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
+		study_lib(manager);
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
 	{
 		study_fat_32(manager);
