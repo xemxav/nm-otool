@@ -22,6 +22,7 @@
 # include <mach-o/nlist.h>
 # include <mach/machine.h>
 # include <ar.h>
+# include <ranlib.h>
 # include <mach-o/fat.h>
 
 
