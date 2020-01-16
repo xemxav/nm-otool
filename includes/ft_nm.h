@@ -22,7 +22,7 @@
 # include <mach-o/nlist.h>
 # include <mach/machine.h>
 # include <ar.h>
-# include <ranlib.h>
+# include <mach-o/ranlib.h>
 # include <mach-o/fat.h>
 
 
@@ -87,6 +87,7 @@ void				print_symbols_32(t_manager *manager);
 /*
  *			utils.c
  */
+void		*ts(void *tmp, void *value, size_t size, int ts);
 void 				*swap(void *tmp, void *value, size_t size);
 int					free_manager(t_manager *manager, int ret);
 t_symbol 			*free_symbols(t_symbol *head);

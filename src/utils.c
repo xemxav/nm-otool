@@ -13,12 +13,21 @@
 
 #include "../includes/ft_nm.h"
 
+//faire une fonction to_swap qui appelle swap si besoin et prend que deux param
+
 void		*swap(void *tmp, void *value, size_t size)
 {
 	ft_memcpy(tmp, value, size);
 	if (ft_memrev(tmp, sizeof(char), size) == NULL)
 		return (NULL);
 	return (tmp);
+}
+
+void		*ts(void *tmp, void *value, size_t size, int ts)
+{
+	if (ts)
+		return swap(tmp, value, size);
+	return value;
 }
 
 t_symbol		*free_symbols(t_symbol *head)
