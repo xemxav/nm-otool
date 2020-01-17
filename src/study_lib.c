@@ -40,9 +40,10 @@ static int	iterate_on_rlibs(t_manager *manager, struct	ranlib  *rlib, int size_r
 
 	i = 0;
 	nb_structs = size_rlibs / sizeof(struct ranlib);
+	libfile.next = NULL;
 	while (i < nb_structs)
 	{
-		file_header = (struct ar_hdr*)(manager->file + rlib->ran_off);
+		file_header = (struct ar_hdr*)(manager->file + rlib[i].ran_off);
 		name_size = get_name_size(file_header);
 		libfile.filename = get_name(file_header, name_size);
 		libfile.file_start = (char*)((void*)file_header +

@@ -85,11 +85,10 @@ int				record_symbol(t_manager *manager, t_symbol *symbol)
 	if ((new = (t_symbol*)malloc(sizeof(t_symbol))) == NULL)
 		return (ERROR);
 	ft_memcpy(new, symbol, sizeof(t_symbol));
+	new->next = NULL;
 	if (manager->symbol_list == NULL)
 		manager->symbol_list = new;
 	else
-	{
 		insert_symbol(manager, new);
-	}
 	return (TRUE);
 }
