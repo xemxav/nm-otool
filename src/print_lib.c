@@ -47,6 +47,11 @@ static void		insert_libfile(t_manager *manager, t_libfile *new)
 		first = second;
 		second = second->next;
 	}
+	if (first && ft_strcmp(first->filename, new->filename) == 0)
+	{
+		free(new);
+		return;
+	}
 	new->next = second;
 	if (first)
 		first->next = new;
@@ -59,7 +64,7 @@ int record_libfile(t_manager *manager, t_libfile *libfile)
 {
 	t_libfile	*new;
 
-	if ((new = (t_libfile*)malloc(sizeof(t_libfile))) == NULL)
+ 	if ((new = (t_libfile*)malloc(sizeof(t_libfile))) == NULL)
 		return (ERROR);
 	ft_memcpy(new, libfile, sizeof(t_libfile));
 	new->next = NULL;
