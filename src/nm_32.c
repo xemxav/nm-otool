@@ -13,6 +13,9 @@
 
 #include "../includes/ft_nm.h"
 
+//faire fonction pour swap toutes les infos des structs contenant des infos
+
+
 struct section		*find_section_in_seg(struct segment_command
 		*segment, uint32_t sum_sects, uint32_t n_sect)
 {
@@ -20,7 +23,7 @@ struct section		*find_section_in_seg(struct segment_command
 	int							index_section;
 
 	section = (struct section*)((void*)segment +
-								   sizeof(struct segment_command));
+			sizeof(struct segment_command));
 	index_section = segment->nsects - (sum_sects - n_sect) - 1;
 	return (&section[index_section]);
 }
@@ -63,6 +66,8 @@ int						fill_symbol_32(t_symbol *symbol, t_manager *manager,
 		if ((section = find_section_32(el->n_sect, manager)) == NULL)
 			return (ERROR);
 		symbol->sym_type = section->sectname[2];
+		if (!ft_strchr(SECT, symbol->sym_type))
+			symbol->sym_type = 's';
 	}
 	else
 		study_type(symbol, el->n_type, manager->swap);
@@ -80,10 +85,15 @@ int						read_symtab_32(t_manager *manager)
 	int					i;
 	struct nlist		*el;
 	t_symbol			symbol;
+	uint32_t			symmof;
 
-	el = (struct nlist*)(manager->file + manager->symtab->symoff);
+	if (manager->swap)
+		swap(&symmof, &manager->symtab->symoff, sizeof(uint32_t));
+	else
+		symmof = manager->symtab->symoff;
+	el = (struct nlist*)(manager->file + symmof);
 	i = 0;
-	while (i < manager->symtab->nsyms)
+	while (i < manager->symtab->nsyms) // a swap
 	{
 		if (!(el[i].n_type & N_STAB))
 			fill_symbol_32(&symbol, manager, &el[i]);
