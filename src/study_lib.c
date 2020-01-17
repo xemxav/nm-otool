@@ -11,65 +11,64 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <mach-o/ranlib.h>
 #include "../includes/ft_nm.h"
 
-int get_name_size(struct ar_hdr	*lib_header)
+static int		get_name_size(struct ar_hdr	*lib_header)
 {
 	if (lib_header->ar_name[0] == '#')
 		return (ft_atoi(lib_header->ar_name + 3));
 	else
-		return (ft_atoi(lib_header->ar_name));
+		return (0);
 }
 
-char *get_name(struct ar_hdr	*lib_header, int size)
+static char		*get_name(struct ar_hdr	*lib_header, int size)
 {
-	if (size < 17)
+	if (!size)
 		return lib_header->ar_name;
 	else
 		return (char*)((void*)lib_header + sizeof(struct ar_hdr));
 }
 
 
-
-void	check_rlib(t_manager *manager, struct	ranlib  *rlib, uint32_t size_rlibs)
+static int	iterate_on_rlibs(t_manager *manager, struct	ranlib  *rlib, int size_rlibs)
 {
+	size_t			i;
+	size_t			nb_structs;
+	t_libfile		libfile;
+	int				name_size;
 	struct ar_hdr	*file_header;
-	char *file_name;
-	int name_size;
-
-	file_header = (struct ar_hdr*)(manager->file + rlib->ran_off);
-	name_size = get_name_size(file_header);
-	file_name = get_name(file_header, name_size);
-	printf("%s(%s):\n", manager->filename, file_name);
-	manager->file = (char*)((void*)file_header + sizeof(struct ar_hdr) + name_size);
-	nm(manager);
-}
-
-void	iterate_on_rlibs(t_manager *manager, struct	ranlib  *rlib, uint32_t size_rlibs)
-{
-	size_t i;
 
 	i = 0;
-//	while (i < size_rlibs / sizeof(struct ar_hdr))
-//	{
-		check_rlib(manager, &rlib[i], size_rlibs);
-//		i++;
-//	}
+	nb_structs = size_rlibs / sizeof(struct ranlib);
+	while (i < nb_structs)
+	{
+		file_header = (struct ar_hdr*)(manager->file + rlib->ran_off);
+		name_size = get_name_size(file_header);
+		libfile.filename = get_name(file_header, name_size);
+		libfile.file_start = (char*)((void*)file_header +
+				sizeof(struct ar_hdr) + name_size);
+		if (record_libfile(manager, &libfile) == ERROR)
+			return (ERROR);
+		i++;
+	}
+	return (TRUE);
 }
 
-int		study_lib(t_manager *manager)
+int			study_lib(t_manager *manager)
 {
 	//penser a faire avec le _64
 	struct ar_hdr	*lib_header;
 	struct	ranlib  *rlib;
-	uint32_t	nb_rlib;
+	int	nb_rlib;
 	int size_name;
 
 	lib_header = (struct ar_hdr*)(manager->file + SARMAG);
 	size_name = get_name_size(lib_header);
-	nb_rlib = *(uint32_t*)((void*)lib_header + sizeof(struct ar_hdr) + size_name);
-	rlib = (struct ranlib*)((void*)lib_header + sizeof(struct ar_hdr) + size_name + sizeof(uint32_t));
-	iterate_on_rlibs(manager, rlib, nb_rlib);
-	return (0);
+	nb_rlib = *(int*)((void*)lib_header + sizeof(struct ar_hdr) + size_name);
+	rlib = (struct ranlib*)((void*)lib_header + sizeof(struct ar_hdr) + size_name + sizeof(int));
+	if (iterate_on_rlibs(manager, rlib, nb_rlib) == ERROR)
+		return (ERROR);
+	return (iterate_on_libfile(manager));
 }
+
+

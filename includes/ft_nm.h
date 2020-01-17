@@ -38,7 +38,14 @@ typedef struct				s_symbol
 	struct s_symbol			*next;
 }							t_symbol;
 
-typedef struct	s_manager
+typedef struct				s_libfile
+{
+	char					*filename;
+	char 					*file_start;
+	struct s_libfile		*next;
+}							t_libfile;
+
+typedef struct				s_manager
 {
 	char					*filename;
 	char 					*file;
@@ -50,7 +57,10 @@ typedef struct	s_manager
 	size_t					header_size;
 	uint32_t				ncmds;
 	struct s_symbol 		*symbol_list;
+	struct s_libfile		*libstart;
 }							t_manager;
+
+
 
 
 int 				nm(t_manager *manager);
@@ -78,6 +88,12 @@ int					study_fat_32(t_manager *manager);
  *			study_lib.c
  */
 int					study_lib(t_manager *manager);
+/*
+ *			print_lib.c
+ */
+int					record_libfile(t_manager *manager, t_libfile *libfile);
+int   				iterate_on_libfile(t_manager *manager);
+
 /*
  *			symnols_64.c
  */

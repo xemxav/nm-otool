@@ -41,6 +41,17 @@ t_symbol		*free_symbols(t_symbol *head)
 	return (free_symbols(tmp));
 }
 
+t_libfile		*free_libfiles(t_libfile *head)
+{
+	t_libfile	*tmp;
+
+	if (!head)
+		return (NULL);
+	tmp = head->next;
+	free(head);
+	return (free_libfiles(tmp));
+}
+
 int				free_manager(t_manager *manager, int ret)
 {
 	if (manager->file)
@@ -50,6 +61,8 @@ int				free_manager(t_manager *manager, int ret)
 	}
 	if (manager->symbol_list)
 		free_symbols(manager->symbol_list);
+	if (manager->libstart)
+		free_libfiles(manager->libstart);
 	close(manager->fd);
 	return (ret);
 }
