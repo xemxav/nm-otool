@@ -53,16 +53,13 @@ int							find_lc_symtab(t_manager *manager)
 int			handle_64(t_manager *manager)
 {
 	struct mach_header_64	*header;
-	uint32_t				s_ncmds;
 
 	header = (struct mach_header_64*)manager->file;
 	manager->ncmds = header->ncmds;
 	if (*(uint32_t*)manager->file == MH_CIGAM_64)
 	{
-//		printf("coucou 64 \n");
 		manager->swap = 1;
-		manager->ncmds = *(uint32_t*)swap(&s_ncmds,
-				&header->ncmds, sizeof(uint32_t));
+		swap(&manager->ncmds,&header->ncmds, sizeof(uint32_t));
 	}
 	manager->header_size = sizeof(struct mach_header_64);
 	if (find_lc_symtab(manager) && read_symtab_64(manager))
@@ -73,15 +70,13 @@ int			handle_64(t_manager *manager)
 int			handle_32(t_manager *manager)
 {
 	struct mach_header	*header;
-	uint32_t			s_ncmds;
 
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file ==MH_CIGAM)
 	{
 //		printf("coucou 32 \n");
 		manager->swap = 1;
-		manager->ncmds = *(uint32_t*)swap(&s_ncmds,
-				&header->ncmds, sizeof(uint32_t));
+		swap(&manager->ncmds,&header->ncmds, sizeof(uint32_t));
 	}
 	else
 		manager->ncmds = header->ncmds;

@@ -67,7 +67,7 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 	char						*stringtable;
 
 	stringtable = manager->file + manager->symtab.stroff;
-	printf("%s\n", stringtable);
+	symbol->sym_type = 0;
 	if (el->n_sect != 0)
 	{
 		if ((section = find_section_64(el->n_sect, manager)) == NULL)
@@ -103,7 +103,8 @@ int						read_symtab_64(t_manager *manager)
 		if (manager->swap)
 			swap_nlist64(&el_temp, &el[i]);
 		if (!(el_temp.n_type & N_STAB))
-			fill_symbol_64(&symbol, manager, &el_temp);
+			if (fill_symbol_64(&symbol, manager, &el_temp) == ERROR)
+				return (FALSE);
 		i++;
 	}
 	print_symbols_64(manager);
