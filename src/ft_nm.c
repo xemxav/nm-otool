@@ -13,8 +13,11 @@
 
 #include "../includes/ft_nm.h"
 
-void					study_type(t_symbol *symbol, uint8_t type)
+void					study_type(t_symbol *symbol, uint8_t n_type)
 {
+	uint8_t				type;
+
+	type = n_type & N_TYPE;
 	if (type == N_UNDF || type == N_PBUD)
 		symbol->sym_type += 'U';
 	else if (type == N_ABS)
@@ -30,7 +33,6 @@ int							find_lc_symtab(t_manager *manager)
 	struct load_command		lc_temp;
 
 	i = 0;
-//	printf("find_lc_symtab rentre");
 	lc = (struct load_command*)((void*)manager->file + manager->header_size);
 	while (i < manager->ncmds)
 	{
