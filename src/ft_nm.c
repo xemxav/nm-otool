@@ -76,9 +76,8 @@ int			handle_32(t_manager *manager)
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file ==MH_CIGAM)
 	{
-//		printf("coucou 32 \n");
 		manager->swap = 1;
-		swap(&manager->ncmds,&header->ncmds, sizeof(uint32_t));
+		swap(&manager->ncmds, &header->ncmds, sizeof(uint32_t));
 	}
 	else
 		manager->ncmds = header->ncmds;

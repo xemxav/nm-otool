@@ -21,15 +21,15 @@ struct section		*find_section_in_seg(t_manager *manager,
 		struct segment_command *segment, uint32_t sum_sects, uint32_t n_sect)
 {
 	struct section				*section;
-	int							index_section;
-	struct segment_command		seg_temp;
+	uint32_t					index_section;
+	uint32_t					nsects;
 
-	ft_memcpy(&seg_temp, segment, sizeof(struct segment_command));
+	nsects = segment->nsects;
 	if (manager->swap)
-		swap(&seg_temp, segment, sizeof(struct segment_command));
+		ft_memrev(&nsects, sizeof(char), sizeof(uint32_t));
 	section = (struct section*)((void*)segment +
 			sizeof(struct segment_command));
-	index_section = seg_temp.nsects - (sum_sects - n_sect) - 1;
+	index_section = nsects - (sum_sects - n_sect) - 1;
 	return (&section[index_section]);
 }
 
@@ -102,9 +102,10 @@ int						read_symtab_32(t_manager *manager)
 		ft_bzero(&symbol, sizeof(t_symbol));
 		ft_memcpy(&el_temp, &el[i], sizeof(struct nlist));
 		if (manager->swap)
-			swap_nlist(&el_temp, el);
+			swap_nlist(&el_temp, &el[i]);
 		if (!(el_temp.n_type & N_STAB))
-			fill_symbol_32(&symbol, manager, &el_temp);
+			if (fill_symbol_32(&symbol, manager, &el_temp) == ERROR)
+				return (ERROR);
 		i++;
 	}
 	print_symbols_32(manager);

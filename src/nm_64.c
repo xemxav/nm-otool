@@ -19,15 +19,15 @@ struct section_64		*find_section_in_seg_64(t_manager *manager,
 		struct segment_command_64 *segment, uint32_t sum_sects, uint32_t n_sect)
 {
 	struct section_64			*section;
-	int							index_section;
-	struct segment_command_64	seg_temp;
+	uint32_t					index_section;
+	uint32_t					nsects;
 
-	ft_memcpy(&seg_temp, segment, sizeof(struct segment_command_64));
+	nsects = segment->nsects;
 	if (manager->swap)
-		swap(&seg_temp, segment, sizeof(struct segment_command_64));
+		ft_memrev(&nsects, sizeof(char), sizeof(uint32_t));
 	section = (struct section_64*)((void*)segment +
 			sizeof(struct segment_command_64));
-	index_section = seg_temp.nsects - (sum_sects - n_sect) - 1;
+	index_section = nsects - (sum_sects - n_sect) - 1;
 	return (&section[index_section]);
 }
 

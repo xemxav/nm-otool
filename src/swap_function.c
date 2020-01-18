@@ -20,6 +20,7 @@ struct load_command *swap_lc(struct load_command *temp, struct load_command *lc)
 	return(temp);
 }
 
+
 struct symtab_command *swap_symtab(struct symtab_command *temp,
 		struct symtab_command *symtab)
 {
@@ -34,9 +35,11 @@ struct symtab_command *swap_symtab(struct symtab_command *temp,
 
 struct nlist *swap_nlist(struct nlist *temp, struct nlist *nlist)
 {
-	swap(&temp->n_sect, &nlist->n_sect, sizeof(uint8_t));
+	temp->n_sect = nlist->n_sect;
+	temp->n_type = nlist->n_type;
+//	swap(&temp->n_sect, &nlist->n_sect, sizeof(uint8_t));
 	swap(&temp->n_un.n_strx, &nlist->n_un.n_strx, sizeof(uint32_t));
-	swap(&temp->n_type, &nlist->n_type, sizeof(uint8_t));
+//	swap(&temp->n_type, &nlist->n_type, sizeof(uint8_t));
 	swap(&temp->n_desc, &nlist->n_desc, sizeof(int16_t));
 	swap(&temp->n_value, &nlist->n_value, sizeof(uint32_t));
 	return (temp);
@@ -44,9 +47,11 @@ struct nlist *swap_nlist(struct nlist *temp, struct nlist *nlist)
 
 struct nlist_64 *swap_nlist64(struct nlist_64 *temp, struct nlist_64 *nlist)
 {
-	swap(&temp->n_sect, &nlist->n_sect, sizeof(uint8_t));
+	temp->n_sect = nlist->n_sect;
+	temp->n_type = nlist->n_type;
+//	swap(&temp->n_sect, &nlist->n_sect, sizeof(uint8_t));
 	swap(&temp->n_un.n_strx, &nlist->n_un.n_strx, sizeof(uint32_t));
-	swap(&temp->n_type, &nlist->n_type, sizeof(uint8_t));
+//	swap(&temp->n_type, &nlist->n_type, sizeof(uint8_t));
 	swap(&temp->n_desc, &nlist->n_desc, sizeof(int16_t));
 	swap(&temp->n_value, &nlist->n_value, sizeof(uint64_t));
 	return (temp);
