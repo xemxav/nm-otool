@@ -23,13 +23,6 @@ void		*swap(void *tmp, void *value, size_t size)
 	return (tmp);
 }
 
-void		*ts(void *tmp, void *value, size_t size, int ts)
-{
-	if (ts)
-		return swap(tmp, value, size);
-	return value;
-}
-
 t_symbol		*free_symbols(t_symbol *head)
 {
 	t_symbol	*tmp;

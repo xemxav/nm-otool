@@ -13,15 +13,8 @@
 
 #include "../includes/ft_nm.h"
 
-void					study_type(t_symbol *symbol, uint8_t n_type, int swapping)
+void					study_type(t_symbol *symbol, uint8_t type)
 {
-	uint8_t				type;
-	uint8_t				s_nype;
-
-	if (swapping)
-		type = *(uint8_t*)swap(&s_nype, &n_type, sizeof(uint8_t)) & N_TYPE;
-	else
-		type = n_type & N_TYPE;
 	if (type == N_UNDF || type == N_PBUD)
 		symbol->sym_type += 'U';
 	else if (type == N_ABS)
@@ -34,22 +27,24 @@ int							find_lc_symtab(t_manager *manager)
 {
 	int						i;
 	struct load_command		*lc;
-	uint32_t				s_cmdsize;
+	struct load_command		lc_temp;
 
 	i = 0;
+//	printf("find_lc_symtab rentre");
 	lc = (struct load_command*)((void*)manager->file + manager->header_size);
 	while (i < manager->ncmds)
 	{
-		if (lc->cmd == LC_SYMTAB)
+		ft_memcpy(&lc_temp, lc, sizeof(struct load_command));
+		if (manager->swap)
+			swap_lc(&lc_temp, lc);
+		if (lc_temp.cmd == LC_SYMTAB)
 		{
-			manager->symtab = (struct symtab_command*)lc;
+			ft_memcpy(&manager->symtab, lc, sizeof(struct symtab_command));
+			if (manager->swap)
+				swap_symtab(&manager->symtab, (struct symtab_command*)lc);
 			return (TRUE);
 		}
-		if (manager->swap)
-			lc = (void*)lc + *(uint32_t*)swap(&s_cmdsize,
-					&lc->cmdsize, sizeof(uint32_t));
-		else
-			lc = (void*)lc + lc->cmdsize;
+		lc = (void*)lc + lc_temp.cmdsize;
 		i++;
 	}
 	return (FALSE);
@@ -64,7 +59,7 @@ int			handle_64(t_manager *manager)
 	manager->ncmds = header->ncmds;
 	if (*(uint32_t*)manager->file == MH_CIGAM_64)
 	{
-		printf("coucou 64 \n");
+//		printf("coucou 64 \n");
 		manager->swap = 1;
 		manager->ncmds = *(uint32_t*)swap(&s_ncmds,
 				&header->ncmds, sizeof(uint32_t));
@@ -83,7 +78,7 @@ int			handle_32(t_manager *manager)
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file ==MH_CIGAM)
 	{
-		printf("coucou 32 \n");
+//		printf("coucou 32 \n");
 		manager->swap = 1;
 		manager->ncmds = *(uint32_t*)swap(&s_ncmds,
 				&header->ncmds, sizeof(uint32_t));
@@ -109,13 +104,9 @@ int							nm(t_manager *manager)
 	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
 		study_lib(manager);
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
-	{
 		study_fat_32(manager);
-	}
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
-	{
 		study_fat_64(manager);
-	}
 	return (TRUE);
 }
 
