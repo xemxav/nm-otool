@@ -25,9 +25,6 @@
 # include <mach-o/ranlib.h>
 # include <mach-o/fat.h>
 
-
-//#define	ARMAG		"!<arch>\n"
-
 #define SECT "tdb"
 
 typedef struct				s_symbol
@@ -42,6 +39,7 @@ typedef struct				s_libfile
 {
 	char					*filename;
 	char 					*file_start;
+	uint32_t 				offset;
 	struct s_libfile		*next;
 }							t_libfile;
 

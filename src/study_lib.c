@@ -45,6 +45,7 @@ static int	iterate_on_rlibs(t_manager *manager, struct	ranlib  *rlib, int size_r
 	{
 		file_header = (struct ar_hdr*)(manager->file + rlib[i].ran_off);
 		name_size = get_name_size(file_header);
+		libfile.offset = rlib[i].ran_off;
 		libfile.filename = get_name(file_header, name_size);
 		libfile.file_start = (char*)((void*)file_header +
 				sizeof(struct ar_hdr) + name_size);
@@ -59,9 +60,9 @@ int			study_lib(t_manager *manager)
 {
 	//penser a faire avec le _64
 	struct ar_hdr	*lib_header;
-	struct	ranlib  *rlib;
-	int	nb_rlib;
-	int size_name;
+	struct	ranlib	*rlib;
+	int				nb_rlib;
+	int				size_name;
 
 	lib_header = (struct ar_hdr*)(manager->file + SARMAG);
 	size_name = get_name_size(lib_header);

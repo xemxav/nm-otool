@@ -42,12 +42,12 @@ static void		insert_libfile(t_manager *manager, t_libfile *new)
 
 	first = NULL;
 	second = manager->libstart;
-	while (second != NULL && ft_strcmp(second->filename, new->filename) <= 0)
+	while (second != NULL && second->offset <= new->offset)
 	{
 		first = second;
 		second = second->next;
 	}
-	if (first && ft_strcmp(first->filename, new->filename) == 0)
+	if (first && first->offset == new->offset)
 	{
 		free(new);
 		return;

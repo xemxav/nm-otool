@@ -64,6 +64,7 @@ int			handle_64(t_manager *manager)
 	manager->ncmds = header->ncmds;
 	if (*(uint32_t*)manager->file == MH_CIGAM_64)
 	{
+		printf("coucou 64 \n");
 		manager->swap = 1;
 		manager->ncmds = *(uint32_t*)swap(&s_ncmds,
 				&header->ncmds, sizeof(uint32_t));
