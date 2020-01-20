@@ -36,7 +36,7 @@ int			study_fat_64(t_manager *manager)
 		{
 			manager->file = manager->file_tmp +
 					*(uint64_t*)(swap(&tmp2, &arch[i].offset,sizeof(uint64_t)));
-			nm(manager);
+			return (nm(manager));
 		}
 		i++;
 	}
@@ -67,7 +67,7 @@ int			study_fat_32(t_manager *manager)
 		{
 			manager->file = manager->file_tmp +
 					*(uint32_t*)(swap(&tmp2, &arch[i].offset,sizeof(uint32_t)));
-			nm(manager);
+			return (nm(manager));
 		}
 		i++;
 	}
