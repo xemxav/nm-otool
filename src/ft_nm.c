@@ -13,20 +13,6 @@
 
 #include "../includes/ft_nm.h"
 
-void					study_type(t_symbol *symbol, uint8_t n_type)
-{
-	uint8_t				type;
-
-	type = n_type & N_TYPE;
-	if (type == N_UNDF || type == N_PBUD)
-		symbol->sym_type += 'U';
-	else if (type == N_ABS)
-		symbol->sym_type += 'A';
-	else if (type == N_INDR)
-		symbol->sym_type += 'I';
-
-}
-
 int							find_lc_symtab(t_manager *manager)
 {
 	int						i;

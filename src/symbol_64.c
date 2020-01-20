@@ -26,6 +26,7 @@ void			print_symbols_64(t_manager *manager)
 		else
 			ft_printf("%16c", ' ');
 		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
+//		ft_printf(" %c %s sect=%d, type=%x, segment=%s, section=%s\n", symbol->sym_type, symbol->sym_name, symbol->n_sect, symbol->n_type, symbol->segment, symbol->section);
 		tmp = symbol;
 		symbol = symbol->next;
 		free(tmp);
@@ -46,6 +47,7 @@ void			print_symbols_32(t_manager *manager)
 		else
 			ft_printf("%8c", ' ');
 		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
+//		ft_printf(" %c %s sect=%d, type=%x, segment=%s, section=%s\n", symbol->sym_type, symbol->sym_name, symbol->n_sect, symbol->n_type, symbol->segment, symbol->section);
 		tmp = symbol;
 		symbol = symbol->next;
 		free(tmp);

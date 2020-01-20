@@ -1,9 +1,1 @@
-nm_bin_file_ok/MachO-OSX-x64-ls
-nm_bin_file_ok/MachO-OSX-x86-ls
-nm_bin_file_ok/gcc-6-ppc_7400
-nm_bin_file_ok/libc++.1.dylib
-nm_bin_file_ok/libcoretls.dylib
-nm_bin_file_ok/libft32.a
 nm_bin_file_ok/libft_static.a
-nm_bin_file_ok/libftprintf32.a
-

@@ -25,13 +25,19 @@
 # include <mach-o/ranlib.h>
 # include <mach-o/fat.h>
 
-#define SECT "tdb"
+# define TEXT "__text"
+# define BSS "__bss"
+# define DATA "__data"
 
 typedef struct				s_symbol
 {
 	uint64_t				value;
 	char 					sym_type;
 	char 					*sym_name;
+	uint8_t n_sect;
+	uint8_t n_type;
+	char *segment;
+	char *section;
 	struct s_symbol			*next;
 }							t_symbol;
 
@@ -62,7 +68,6 @@ typedef struct				s_manager
 
 
 int 				nm(t_manager *manager);
-void				study_type(t_symbol *symbol, uint8_t type);
 /*
  *			commons.c
  */
@@ -77,6 +82,11 @@ int 				read_symtab_64(t_manager *manager);
  *			nm_32.c
  */
 int 				read_symtab_32(t_manager *manager);
+/*
+ *			study_type.c
+ */
+void				study_type(t_symbol *symbol, uint8_t type);
+void				check_section_name(t_symbol *symbol, char *sectname);
 /*
  *			nm_fat.c
  */

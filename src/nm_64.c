@@ -68,20 +68,22 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 
 	stringtable = manager->file + manager->symtab.stroff;
 	symbol->sym_type = 0;
-	if (el->n_sect != 0)
+	symbol->n_sect = el->n_sect;
+	symbol->n_type = el->n_type & N_TYPE;
+	symbol->value = el->n_value;
+	if ((el->n_type & N_TYPE) == N_SECT)
 	{
 		if ((section = find_section_64(el->n_sect, manager)) == NULL)
 			return (ERROR);
-		symbol->sym_type = section->sectname[2];
-		if (!ft_strchr(SECT, symbol->sym_type))
-			symbol->sym_type = 's';
+		symbol->segment = section->segname;
+		symbol->section = section->sectname;
+		check_section_name(symbol, section->sectname);
 	}
 	else
 		study_type(symbol, el->n_type);
 	if (el->n_type & N_EXT && symbol->sym_type >= 97)
 		symbol->sym_type -= 32;
 	symbol->sym_name = stringtable + el->n_un.n_strx;
-	symbol->value = el->n_value;
 	if (record_symbol(manager, symbol) == ERROR)
 		return (ERROR);
 	return (TRUE);
