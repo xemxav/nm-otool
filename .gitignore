@@ -1,6 +1,9 @@
 # project
 ft_nm
 ft_otool
+nm_bin_file_ok/
+otool_bin_file_ok/
+cmake-build-debug/
 
 #subject
 *.pdf
