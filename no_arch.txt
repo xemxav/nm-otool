@@ -1,1 +1,0 @@
-nm_bin_file_ok/libate.dylib

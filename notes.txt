@@ -116,12 +116,7 @@ pour chaque n_list ( leur nombre est dans sym->nsyms)
 
 >> voir source code https://stackoverflow.com/c/42network/questions/388/389#389
 
-nm_bin_file_ok/libft32.a > mettre S a la place de T
-nm_bin_file_ok/libftprintf32.a > mettre S a la place de T
-nm_bin_file_ok/MachO-OSX-x64-ls > mettre A a la place de T
-nm_bin_file_ok/MachO-OSX-x86-ls > mettre A a la place de T
-nm_bin_file_ok/gcc-6-ppc_7400 > mettre s a la place de t ou s a la place de b
-nm_bin_file_ok/libft_static.a > mettre C a la place de U
 
+Mettre nom du fichier / executable si plusieurs.
 
-
+imprimer uniquement les archi que je connais en fat, sinon toutes les imprimer
