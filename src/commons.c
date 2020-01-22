@@ -30,7 +30,8 @@ int				get_mapping(t_manager *manager)
 	return (TRUE);
 }
 
-int				open_file(char *name, char *prog, int func(t_manager *))
+int				open_file(char *name, char *prog, int func(t_manager *),
+		int several)
 {
 	t_manager	manager;
 	int			ret;
@@ -47,6 +48,12 @@ int				open_file(char *name, char *prog, int func(t_manager *))
 	if (ret != ERROR)
 		ret = get_mapping(&manager);
 	if (ret != ERROR)
-		func(&manager);
+	{
+		if (several)
+			ft_printf("\n%s:\n", name);
+		if (func(&manager) == FALSE)
+			ft_printf("%s: %s The The file was not "
+			 "recognized as a valid object file\n", prog, name);
+	}
 	return (free_manager(&manager, ret));
 }

@@ -29,6 +29,12 @@
 # define BSS "__bss"
 # define DATA "__data"
 
+typedef struct				s_arch_name
+{
+	cpu_type_t				cputype;
+	char					*name;
+}							t_arch_name;
+
 typedef struct				s_symbol
 {
 	uint64_t				value;
@@ -54,6 +60,7 @@ typedef struct				s_manager
 	char					*filename;
 	char 					*file;
 	char 					*file_tmp;
+	int 					sev_file;
 	int 					fd;
 	struct stat				buf; //verifier si besoin de le garder dans le manager
 	int 					swap;
@@ -73,7 +80,7 @@ int 				nm(t_manager *manager);
  */
 int					usage(char *prog, char *bad_name, char *dirname);
 int					get_mapping(t_manager *manager);
-int					open_file(char *name, char *prog, int func(t_manager *));
+int					open_file(char *name, char *prog, int func(t_manager *), int several);
 /*
  *			nm_64.c
  */
