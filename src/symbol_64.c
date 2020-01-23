@@ -22,10 +22,10 @@ void			print_symbols_64(t_manager *manager)
 	while (symbol != NULL)
 	{
 		if (symbol->sym_type != 'u' && symbol->sym_type != 'U')
-			ft_printf("%.16llx", symbol->value);
+			printf("%.16llx", symbol->value64);
 		else
-			ft_printf("%16c", ' ');
-		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
+			printf("%16c", ' ');
+		printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
 //		ft_printf(" %c %s sect=%d, type=%x, segment=%s, section=%s\n", symbol->sym_type, symbol->sym_name, symbol->n_sect, symbol->n_type, symbol->segment, symbol->section);
 		tmp = symbol;
 		symbol = symbol->next;
@@ -43,10 +43,10 @@ void			print_symbols_32(t_manager *manager)
 	while (symbol != NULL)
 	{
 		if (symbol->sym_type != 'u' && symbol->sym_type != 'U')
-			ft_printf("%.8llx", symbol->value);
+			printf("%.8lx", symbol->value32);
 		else
-			ft_printf("%8c", ' ');
-		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
+			printf("%8c", ' ');
+		printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
 //		ft_printf(" %c %s sect=%d, type=%x, segment=%s, section=%s\n", symbol->sym_type, symbol->sym_name, symbol->n_sect, symbol->n_type, symbol->segment, symbol->section);
 		tmp = symbol;
 		symbol = symbol->next;

@@ -21,11 +21,7 @@ int							find_lc_symtab(t_manager *manager)
 
 	i = 0;
 	lc = (struct load_command*)((void*)manager->file + manager->header_size);
-//	printf("sizeof(header) = %lu\n", sizeof(struct mach_header));
-//	printf("manager->header_size = %lu\n", manager->header_size);
-//	printf("off to lc = %lx\n", (char*)lc - manager->file);
-//	printf("off to lc = %ld\n", (char*)lc - manager->file);
-	ft_bzero(&lc_temp, sizeof(struct load_command));
+	ft_bzero(&lc_temp, sizeof(struct load_command)); // a tester sans
 	while (i < manager->ncmds)
 	{
 		ft_memcpy(&lc_temp, lc, sizeof(struct load_command));
@@ -70,7 +66,6 @@ int			handle_32(t_manager *manager)
 
 	if (manager->file_tmp == NULL)
 		manager->file_tmp = manager->file;
-//	printf("offset = %lx\n",manager->file - manager->file_tmp);
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file ==MH_CIGAM)
 	{

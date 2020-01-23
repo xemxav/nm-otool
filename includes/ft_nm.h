@@ -37,7 +37,8 @@ typedef struct				s_arch_name
 
 typedef struct				s_symbol
 {
-	uint64_t				value;
+	uint64_t				value64;
+	uint32_t				value32;
 	char 					sym_type;
 	char 					*sym_name;
 	uint8_t n_sect;

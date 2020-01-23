@@ -72,7 +72,7 @@ int						fill_symbol_32(t_symbol *symbol, t_manager *manager,
 	symbol->sym_type = 0;
 	symbol->n_sect = el->n_sect;
 	symbol->n_type = el->n_type & N_TYPE;
-	symbol->value = el->n_value;
+	symbol->value32 = el->n_value;
 	if ((el->n_type & N_TYPE) == N_SECT)
 	{
 		if ((section = find_section_32(el->n_sect, manager)) == NULL)

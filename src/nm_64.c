@@ -70,13 +70,13 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 	symbol->sym_type = 0;
 	symbol->n_sect = el->n_sect;
 	symbol->n_type = el->n_type & N_TYPE;
-	symbol->value = el->n_value;
+	symbol->value64 = el->n_value;
 	if ((el->n_type & N_TYPE) == N_SECT)
 	{
 		if ((section = find_section_64(el->n_sect, manager)) == NULL)
 			return (ERROR);
-		symbol->segment = section->segname;
-		symbol->section = section->sectname;
+		symbol->segment = section->segname; //debug a suppr
+		symbol->section = section->sectname; // debug a suppr
 		check_section_name(symbol, section->sectname);
 	}
 	else
@@ -98,7 +98,7 @@ int						read_symtab_64(t_manager *manager)
 
 	el = (struct nlist_64 *)(manager->file + manager->symtab.symoff);
 	i = 0;
-	while (i < manager->symtab.nsyms) // a swap
+	while (i < manager->symtab.nsyms)
 	{
 		ft_bzero(&symbol, sizeof(t_symbol));
 		ft_memcpy(&el_temp, &el[i], sizeof(struct nlist_64));
