@@ -27,4 +27,5 @@ add_executable(ft_otool ${OT_SOURCE} ${SH_SOURCE})
 find_library(LIBFT ft libft)
 
 target_link_libraries(ft_nm LINK_PUBLIC ${LIBFT})
+target_link_libraries(ft_otool LINK_PUBLIC ${LIBFT})
 

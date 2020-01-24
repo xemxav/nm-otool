@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../includes/ft_nm.h"
+#include "../../includes/ft_nm.h"
 
 int				usage(char *prog, char *bad_name, char *dirname)
 {

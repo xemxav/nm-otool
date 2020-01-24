@@ -22,9 +22,6 @@
 # include <ar.h>
 # include <mach-o/ranlib.h>
 # include <mach-o/fat.h>
-# define TEXT "__text"
-# define BSS "__bss"
-# define DATA "__data"
 
 typedef struct				s_arch_name
 {
@@ -133,4 +130,8 @@ uint32_t					add_nsect(uint32_t *nsects, int swap);
 void						*swap(void *tmp, void *value, size_t size);
 int							free_manager(t_manager *manager, int ret);
 t_symbol					*free_symbols(t_symbol *head);
+
+int					find_text_64(t_manager *manager);
+
+
 #endif
