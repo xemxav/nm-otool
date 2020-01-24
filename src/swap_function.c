@@ -13,15 +13,15 @@
 
 #include "../includes/ft_nm.h"
 
-struct load_command *swap_lc(struct load_command *temp, struct load_command *lc)
+struct load_command		*swap_lc(struct load_command *temp,
+		struct load_command *lc)
 {
 	swap(&temp->cmd, &lc->cmd, sizeof(u_int32_t));
-	swap(&temp->cmdsize,&lc->cmdsize, sizeof(u_int32_t));
-	return(temp);
+	swap(&temp->cmdsize, &lc->cmdsize, sizeof(u_int32_t));
+	return (temp);
 }
 
-
-struct symtab_command *swap_symtab(struct symtab_command *temp,
+struct symtab_command	*swap_symtab(struct symtab_command *temp,
 		struct symtab_command *symtab)
 {
 	swap(&temp->cmd, &symtab->cmd, sizeof(uint32_t));
@@ -33,36 +33,33 @@ struct symtab_command *swap_symtab(struct symtab_command *temp,
 	return (temp);
 }
 
-struct nlist *swap_nlist(struct nlist *temp, struct nlist *nlist)
+struct nlist			*swap_nlist(struct nlist *temp, struct nlist *nlist)
 {
 	temp->n_sect = nlist->n_sect;
 	temp->n_type = nlist->n_type;
-//	swap(&temp->n_sect, &nlist->n_sect, sizeof(uint8_t));
 	swap(&temp->n_un.n_strx, &nlist->n_un.n_strx, sizeof(uint32_t));
-//	swap(&temp->n_type, &nlist->n_type, sizeof(uint8_t));
 	swap(&temp->n_desc, &nlist->n_desc, sizeof(int16_t));
 	swap(&temp->n_value, &nlist->n_value, sizeof(uint32_t));
 	return (temp);
 }
 
-struct nlist_64 *swap_nlist64(struct nlist_64 *temp, struct nlist_64 *nlist)
+struct nlist_64			*swap_nlist64(struct nlist_64 *temp,
+		struct nlist_64 *nlist)
 {
 	temp->n_sect = nlist->n_sect;
 	temp->n_type = nlist->n_type;
-//	swap(&temp->n_sect, &nlist->n_sect, sizeof(uint8_t));
 	swap(&temp->n_un.n_strx, &nlist->n_un.n_strx, sizeof(uint32_t));
-//	swap(&temp->n_type, &nlist->n_type, sizeof(uint8_t));
 	swap(&temp->n_desc, &nlist->n_desc, sizeof(int16_t));
 	swap(&temp->n_value, &nlist->n_value, sizeof(uint64_t));
 	return (temp);
 }
 
-uint32_t add_nsect(uint32_t *nsects, int swapping)
+uint32_t				add_nsect(uint32_t *nsects, int swapping)
 {
 	uint32_t temp;
 
 	if (swapping)
-		return(*(uint32_t*)swap(&temp, nsects, sizeof(uint32_t)));
+		return (*(uint32_t*)swap(&temp, nsects, sizeof(uint32_t)));
 	else
 		return (*nsects);
 }

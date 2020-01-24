@@ -13,10 +13,6 @@
 
 #include "../includes/ft_nm.h"
 
-//faire fonction pour swap toutes les infos des structs contenant des infos
-
-
-
 struct section		*find_section_in_seg(t_manager *manager,
 		struct segment_command *segment, uint32_t sum_sects, uint32_t n_sect)
 {
@@ -62,23 +58,19 @@ struct section		*find_section_32(uint8_t n_sect, t_manager *manager)
 	return (NULL);
 }
 
-int						fill_symbol_32(t_symbol *symbol, t_manager *manager,
-										  struct nlist *el)
+int					fill_symbol_32(t_symbol *symbol, t_manager *manager,
+		struct nlist *el)
 {
 	struct section			*section;
 	char					*stringtable;
 
 	stringtable = manager->file + manager->symtab.stroff;
 	symbol->sym_type = 0;
-	symbol->n_sect = el->n_sect;
-	symbol->n_type = el->n_type & N_TYPE;
 	symbol->value32 = el->n_value;
 	if ((el->n_type & N_TYPE) == N_SECT)
 	{
 		if ((section = find_section_32(el->n_sect, manager)) == NULL)
 			return (ERROR);
-		symbol->segment = section->segname;
-		symbol->section = section->sectname;
 		check_section_name(symbol, section->sectname);
 	}
 	else
@@ -91,7 +83,7 @@ int						fill_symbol_32(t_symbol *symbol, t_manager *manager,
 	return (TRUE);
 }
 
-int						read_symtab_32(t_manager *manager)
+int					read_symtab_32(t_manager *manager)
 {
 	int						i;
 	struct nlist			*el;
@@ -102,7 +94,6 @@ int						read_symtab_32(t_manager *manager)
 	i = 0;
 	while (i < manager->symtab.nsyms)
 	{
-		ft_bzero(&symbol, sizeof(t_symbol));
 		ft_memcpy(&el_temp, &el[i], sizeof(struct nlist));
 		if (manager->swap)
 			swap_nlist(&el_temp, &el[i]);

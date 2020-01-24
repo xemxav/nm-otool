@@ -21,7 +21,6 @@ int							find_lc_symtab(t_manager *manager)
 
 	i = 0;
 	lc = (struct load_command*)((void*)manager->file + manager->header_size);
-	ft_bzero(&lc_temp, sizeof(struct load_command)); // a tester sans
 	while (i < manager->ncmds)
 	{
 		ft_memcpy(&lc_temp, lc, sizeof(struct load_command));
@@ -40,7 +39,7 @@ int							find_lc_symtab(t_manager *manager)
 	return (FALSE);
 }
 
-int			handle_64(t_manager *manager)
+int							handle_64(t_manager *manager)
 {
 	struct mach_header_64	*header;
 
@@ -49,7 +48,7 @@ int			handle_64(t_manager *manager)
 	if (*(uint32_t*)manager->file == MH_CIGAM_64)
 	{
 		manager->swap = 1;
-		swap(&manager->ncmds,&header->ncmds, sizeof(uint32_t));
+		swap(&manager->ncmds, &header->ncmds, sizeof(uint32_t));
 	}
 	manager->header_size = sizeof(struct mach_header_64);
 	if (find_lc_symtab(manager) && read_symtab_64(manager))
@@ -60,14 +59,14 @@ int			handle_64(t_manager *manager)
 	return (FALSE);
 }
 
-int			handle_32(t_manager *manager)
+int							handle_32(t_manager *manager)
 {
 	struct mach_header	*header;
 
 	if (manager->file_tmp == NULL)
 		manager->file_tmp = manager->file;
 	header = (struct mach_header*)manager->file;
-	if (*(uint32_t*)manager->file ==MH_CIGAM)
+	if (*(uint32_t*)manager->file == MH_CIGAM)
 	{
 		manager->swap = 1;
 		swap(&manager->ncmds, &header->ncmds, sizeof(uint32_t));
@@ -82,7 +81,6 @@ int			handle_32(t_manager *manager)
 	}
 	return (FALSE);
 }
-
 
 int							nm(t_manager *manager)
 {

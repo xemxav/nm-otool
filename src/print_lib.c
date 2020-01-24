@@ -13,10 +13,10 @@
 
 #include "../includes/ft_nm.h"
 
-int   iterate_on_libfile(t_manager *manager)
+int					iterate_on_libfile(t_manager *manager)
 {
-	t_libfile	*libfile;
-	t_libfile	*tmp;
+	t_libfile		*libfile;
+	t_libfile		*tmp;
 
 	libfile = manager->libstart;
 	manager->file_tmp = manager->file;
@@ -35,10 +35,10 @@ int   iterate_on_libfile(t_manager *manager)
 	return (TRUE);
 }
 
-static void		insert_libfile(t_manager *manager, t_libfile *new)
+static void			insert_libfile(t_manager *manager, t_libfile *new)
 {
-	t_libfile	*first;
-	t_libfile	*second;
+	t_libfile		*first;
+	t_libfile		*second;
 
 	first = NULL;
 	second = manager->libstart;
@@ -50,7 +50,7 @@ static void		insert_libfile(t_manager *manager, t_libfile *new)
 	if (first && first->offset == new->offset)
 	{
 		free(new);
-		return;
+		return ;
 	}
 	new->next = second;
 	if (first)
@@ -59,12 +59,11 @@ static void		insert_libfile(t_manager *manager, t_libfile *new)
 		manager->libstart = new;
 }
 
-
-int record_libfile(t_manager *manager, t_libfile *libfile)
+int					record_libfile(t_manager *manager, t_libfile *libfile)
 {
-	t_libfile	*new;
+	t_libfile		*new;
 
- 	if ((new = (t_libfile*)malloc(sizeof(t_libfile))) == NULL)
+	if ((new = (t_libfile*)malloc(sizeof(t_libfile))) == NULL)
 		return (ERROR);
 	ft_memcpy(new, libfile, sizeof(t_libfile));
 	new->next = NULL;

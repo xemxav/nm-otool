@@ -11,11 +11,9 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-//faire fonction pour swap toutes les infos des structs contenant des infos
-
 #include "../includes/ft_nm.h"
 
-struct section_64		*find_section_in_seg_64(t_manager *manager,
+struct section_64		*find_sec_in_seg_64(t_manager *manager,
 		struct segment_command_64 *segment, uint32_t sum_sects, uint32_t n_sect)
 {
 	struct section_64			*section;
@@ -52,7 +50,7 @@ struct section_64		*find_section_64(uint8_t n_sect, t_manager *manager)
 			seg = (struct segment_command_64*)lc;
 			sum_sects += add_nsect(&seg->nsects, manager->swap);
 			if (n_sect <= sum_sects)
-				return (find_section_in_seg_64(manager, seg, sum_sects, n_sect));
+				return (find_sec_in_seg_64(manager, seg, sum_sects, n_sect));
 		}
 		lc = (void*)lc + lc_temp.cmdsize;
 		i++;
@@ -69,15 +67,11 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 	stringtable = manager->file + manager->symtab.stroff;
 	symbol->sym_type = 0;
 	symbol->is64 = 1;
-	symbol->n_sect = el->n_sect;
-	symbol->n_type = el->n_type & N_TYPE;
 	symbol->value64 = el->n_value;
 	if ((el->n_type & N_TYPE) == N_SECT)
 	{
 		if ((section = find_section_64(el->n_sect, manager)) == NULL)
 			return (ERROR);
-		symbol->segment = section->segname; //debug a suppr
-		symbol->section = section->sectname; // debug a suppr
 		check_section_name(symbol, section->sectname);
 	}
 	else
@@ -101,7 +95,6 @@ int						read_symtab_64(t_manager *manager)
 	i = 0;
 	while (i < manager->symtab.nsyms)
 	{
-		ft_bzero(&symbol, sizeof(t_symbol));
 		ft_memcpy(&el_temp, &el[i], sizeof(struct nlist_64));
 		if (manager->swap)
 			swap_nlist64(&el_temp, &el[i]);

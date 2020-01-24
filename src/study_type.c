@@ -13,9 +13,9 @@
 
 #include "../includes/ft_nm.h"
 
-void					study_type(t_symbol *symbol, uint8_t n_type)
+void			study_type(t_symbol *symbol, uint8_t n_type)
 {
-	uint8_t				type;
+	uint8_t		type;
 
 	type = n_type & N_TYPE;
 	if (type == N_UNDF && symbol->value64 == 0 && symbol->value32 == 0)
@@ -28,7 +28,7 @@ void					study_type(t_symbol *symbol, uint8_t n_type)
 		symbol->sym_type += 'I';
 }
 
-void		check_section_name(t_symbol *symbol, char *sectname)
+void			check_section_name(t_symbol *symbol, char *sectname)
 {
 	if (ft_strcmp(sectname, TEXT) == 0)
 		symbol->sym_type = 't';
