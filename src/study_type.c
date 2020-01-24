@@ -16,11 +16,17 @@
 void			study_type(t_symbol *symbol, uint8_t n_type)
 {
 	uint8_t		type;
+	int			value;
 
+	value = 0;
+	if (symbol->is64 && symbol->value64 > 0)
+		value = 1;
+	if (!symbol->is64 && symbol->value32 > 0)
+		value = 1;
 	type = n_type & N_TYPE;
-	if (type == N_UNDF && symbol->value64 == 0 && symbol->value32 == 0)
+	if (type == N_UNDF && value == 0)
 		symbol->sym_type += 'U';
-	if (type == N_UNDF && (symbol->value64 != 0 || symbol->value32 != 0))
+	if (type == N_UNDF && value != 0)
 		symbol->sym_type += 'C';
 	else if (type == N_ABS)
 		symbol->sym_type += 'A';

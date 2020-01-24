@@ -95,6 +95,7 @@ int						read_symtab_64(t_manager *manager)
 	i = 0;
 	while (i < manager->symtab.nsyms)
 	{
+		ft_bzero(&symbol, sizeof(t_symbol));
 		ft_memcpy(&el_temp, &el[i], sizeof(struct nlist_64));
 		if (manager->swap)
 			swap_nlist64(&el_temp, &el[i]);
