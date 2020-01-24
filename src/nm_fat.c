@@ -13,23 +13,23 @@
 
 #include "../includes/ft_nm.h"
 
-//void		print_arch_struct(struct fat_arch arch)
-//{
-//	cpu_type_t	cputype;	/* cpu specifier (int) */
-//	cpu_subtype_t	cpusubtype;	/* machine specifier (int) */
-//	uint32_t	offset;		/* file offset to this object file */
-//	uint32_t	size;		/* size of this object file */
-//	uint32_t	align;
-//
-//	swap(&cputype, &arch.cputype,sizeof(cpu_type_t));
-//	swap(&cpusubtype, &arch.cpusubtype,sizeof(cpu_type_t));
-//	swap(&offset, &arch.offset,sizeof(cpu_type_t));
-//	swap(&size, &arch.size,sizeof(cpu_type_t));
-//	swap(&align, &arch.align,sizeof(cpu_type_t));
-//	ft_printf("cputype =%d, cpusub=%d, offset=%x, size = %d, align = %d\n",
-//			  cputype, cpusubtype, offset, size, align);
-//
-//}
+void		print_arch_struct(struct fat_arch arch)
+{
+	cpu_type_t	cputype;	/* cpu specifier (int) */
+	cpu_subtype_t	cpusubtype;	/* machine specifier (int) */
+	uint32_t	offset;		/* file offset to this object file */
+	uint32_t	size;		/* size of this object file */
+	uint32_t	align;
+
+	swap(&cputype, &arch.cputype,sizeof(cpu_type_t));
+	swap(&cpusubtype, &arch.cpusubtype,sizeof(cpu_type_t));
+	swap(&offset, &arch.offset,sizeof(cpu_type_t));
+	swap(&size, &arch.size,sizeof(cpu_type_t));
+	swap(&align, &arch.align,sizeof(cpu_type_t));
+ft_printf("cputype =%d, cpusub=%d, offset=%x, size = %d, align = %d\n",
+			  cputype, cpusubtype, offset, size, align);
+
+}
 
 static uint32_t get_arch_nb(t_manager *manager)
 {
@@ -122,7 +122,7 @@ static int	all_fat_32(t_manager *manager, uint32_t nfat_arch_ind)
 		manager->file = manager->file_tmp;
 		swap(&offset, &arch[i].offset,sizeof(uint32_t));
 		manager->file += offset;
-//		printf("offsset 1 =%x\n", offset);
+//		ft_printf("offsset 1 =%x\n", offset);
 //		print_arch_struct(arch[i]);
 		print_file_arch_name(manager, &arch[i].cputype);
 		if (nm(manager) != TRUE)
@@ -172,9 +172,13 @@ int			study_fat_32(t_manager *manager)
 	arch = (struct fat_arch*)((void*)manager->file + sizeof(struct fat_header));
 	while (i < nfat_arch)
 	{
+//		print_arch_struct(arch[i]);
 		if (*(cpu_type_t*)swap(&(temp.cputype), &arch[i].cputype, sizeof(cpu_type_t))
 			== CPU_TYPE_X86_64)
+		{
 			swap(&(temp.offset), &arch[i].offset,sizeof(uint32_t));
+			break;
+		}
 		i++;
 	}
 	if (temp.offset)

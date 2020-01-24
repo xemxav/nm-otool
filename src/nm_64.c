@@ -68,6 +68,7 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 
 	stringtable = manager->file + manager->symtab.stroff;
 	symbol->sym_type = 0;
+	symbol->is64 = 1;
 	symbol->n_sect = el->n_sect;
 	symbol->n_type = el->n_type & N_TYPE;
 	symbol->value64 = el->n_value;

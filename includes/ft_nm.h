@@ -41,6 +41,7 @@ typedef struct				s_symbol
 	uint32_t				value32;
 	char 					sym_type;
 	char 					*sym_name;
+	int 					is64;
 	uint8_t n_sect;
 	uint8_t n_type;
 	char *segment;
