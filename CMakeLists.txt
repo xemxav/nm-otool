@@ -11,11 +11,11 @@ FILE(GLOB_RECURSE SH_SOURCE
         src/shared/*.c)
 
 FILE(GLOB_RECURSE NM_SOURCE
-        src/ft_nm/*.c
+        src/ft_nm_files/*.c
         includes/*.h)
 
 FILE(GLOB_RECURSE OT_SOURCE
-        src/ft_otool/*.c
+        src/ft_otool_files/*.c
         includes/*.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "~/nm_otool")
