@@ -34,8 +34,6 @@ static int						handle_32(t_manager *manager)
 {
 	struct mach_header			*header;
 
-	if (manager->file_tmp == NULL)
-		manager->file_tmp = manager->file;
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file == MH_CIGAM)
 	{
@@ -55,12 +53,13 @@ int							otool(t_manager *manager)
 	uint32_t				magic;
 
 	magic = *(uint32_t*)manager->file;
+	manager->otool = 1;
 	if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
 		return (handle_64(manager));
 	else if (magic == MH_MAGIC || magic == MH_CIGAM)
 		return (handle_32(manager));
-//	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
-//		return (study_lib(manager));
+	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
+		return (study_lib(manager));
 //	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
 //		return (study_fat_32(manager));
 //	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)

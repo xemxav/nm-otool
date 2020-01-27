@@ -52,9 +52,12 @@ typedef struct				s_manager
 	char					*filename;
 	char					*file;
 	char					*file_tmp;
+	int						(*funct)(struct s_manager *);
+	int 					otool;
 	int						fd;
 	struct stat				buf;
 	int						swap;
+	int 					lib;
 	struct symtab_command	symtab;
 	size_t					header_size;
 	uint32_t				ncmds;
@@ -65,13 +68,14 @@ typedef struct				s_manager
 t_arch_name					g_name_list[13];
 
 int							nm(t_manager *manager);
+int							otool(t_manager *manager);
 /*
 **			commons.c
 */
 int							usage(char *prog, char *bad_name, char *dirname);
 int							get_mapping(t_manager *manager);
 int							open_file(char *name, char *prog,
-		int func(t_manager *), int several);
+		int funct(t_manager *), int several);
 /*
 **			nm_64.c
 */

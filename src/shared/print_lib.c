@@ -20,11 +20,15 @@ int					iterate_on_libfile(t_manager *manager)
 
 	libfile = manager->libstart;
 	manager->file_tmp = manager->file;
+	if (manager->otool)
+		ft_printf("Archive : %s\n", manager->filename);
 	while (libfile != NULL)
 	{
-		ft_printf("\n%s(%s):\n", manager->filename, libfile->filename);
+		if (!manager->otool)
+			ft_printf("\n");
+		ft_printf("%s(%s):\n", manager->filename, libfile->filename);
 		manager->file = libfile->file_start;
-		if (nm(manager) == ERROR)
+		if (manager->funct(manager) == ERROR)
 			return (ERROR);
 		tmp = libfile;
 		libfile = libfile->next;

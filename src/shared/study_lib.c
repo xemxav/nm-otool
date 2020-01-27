@@ -98,6 +98,7 @@ int						study_lib(t_manager *manager)
 	lib_header = (struct ar_hdr*)(manager->file + SARMAG);
 	size_name = get_name_size(lib_header);
 	name = get_name(lib_header, size_name);
+	manager->lib = 1;
 	if (ft_strcmp(name, SYMDEF) == 0 || ft_strcmp(name, SYMDEF_SORTED) == 0)
 		ret = iterate_on_rlibs(manager, lib_header, size_name);
 	else if (ft_strcmp(name, SYMDEF_64) == 0 ||

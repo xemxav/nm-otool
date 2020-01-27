@@ -22,8 +22,6 @@ static int				print_text_32(t_manager *manager, uint32_t offset,
 
 	adr = 0;
 	byte = (uint8_t*)(manager->file + offset);
-	ft_printf("%s:\nContents of (__TEXT,__text) section\n",
-			manager->filename);
 	while (101)
 	{
 		y = 0;
@@ -33,10 +31,10 @@ static int				print_text_32(t_manager *manager, uint32_t offset,
 				return (ft_printf("\n"));
 			if (y == 0)
 				ft_printf("%.8llx\t%.2x ", adr + init_addr, byte[adr]);
-			if (y == 15)
-				ft_printf("%.2x \n", byte[adr]);
-			if (y > 0 && y < 15)
+			else
 				ft_printf("%.2x ", byte[adr]);
+			if (y == 15 && adr < size - 1)
+				ft_printf("\n");
 			y++;
 			adr++;
 		}
@@ -59,6 +57,11 @@ static int				manage_section_32(t_manager *manager,
 		swap(&size, &section->size, sizeof(uint32_t));
 		swap(&addr, &section->addr, sizeof(uint32_t));
 	}
+	if (!manager->lib)
+		ft_printf("%s:\nContents of (__TEXT,__text) section\n",
+				  manager->filename);
+	else
+		ft_printf("Contents of (__TEXT,__text) section\n");
 	return (print_text_32(manager, offset, size, addr));
 }
 
@@ -100,8 +103,8 @@ int						find_text_32(t_manager *manager)
 			swap_lc(&lc_temp, lc);
 		if (lc_temp.cmd == LC_SEGMENT)
 		{
-			return (find_text_section_32(manager,
-					(struct segment_command*)lc));
+			if (find_text_section_32(manager, (struct segment_command*)lc))
+				return (TRUE);
 		}
 		lc = (void*)lc + lc_temp.cmdsize;
 		i++;
