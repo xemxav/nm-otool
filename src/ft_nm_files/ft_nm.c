@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_nm_files.c                                          .::    .:/ .      .::   */
+/*   ft_nm.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/15 15:01:13 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/15 15:01:13 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/27 17:08:48 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/27 17:08:48 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ int							find_lc_symtab(t_manager *manager)
 	return (FALSE);
 }
 
-static int							handle_64(t_manager *manager)
+static int					handle_64(t_manager *manager)
 {
 	struct mach_header_64	*header;
 
@@ -59,9 +59,9 @@ static int							handle_64(t_manager *manager)
 	return (FALSE);
 }
 
-static int							handle_32(t_manager *manager)
+static int					handle_32(t_manager *manager)
 {
-	struct mach_header	*header;
+	struct mach_header		*header;
 
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file == MH_CIGAM)

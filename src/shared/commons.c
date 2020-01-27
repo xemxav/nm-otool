@@ -39,7 +39,7 @@ int				open_file(char *name, char *prog, int funct(t_manager *),
 	ret = TRUE;
 	ft_bzero(&manager, sizeof(t_manager));
 	manager.filename = name;
-	manager.funct=funct;
+	manager.funct = funct;
 	if ((manager.fd = open(name, O_RDONLY)) < 0)
 		return (usage(prog, name, NULL));
 	if (fstat(manager.fd, &(manager.buf)) < 0)

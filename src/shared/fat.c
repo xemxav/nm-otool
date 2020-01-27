@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   nm_fat.c                                         .::    .:/ .      .::   */
+/*   fat.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/12/09 09:18:47 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 09:18:47 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/27 17:11:22 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/27 17:11:22 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,7 +31,8 @@ static void					print_file_arch_name(t_manager *manager,
 	else
 	{
 		if (a_name)
-			ft_printf("\n%s (for architecture %s):\n", manager->filename, a_name);
+			ft_printf("\n%s (for architecture %s):\n",
+					manager->filename, a_name);
 		else
 			ft_printf("\n%s (for architecture ):\n", manager->filename);
 	}
