@@ -21,10 +21,20 @@ static void					print_file_arch_name(t_manager *manager,
 
 	swap(&type, cputype, sizeof(cpu_type_t));
 	a_name = get_arch_name(type);
-	if (a_name)
-		ft_printf("\n%s (for architecture %s):\n", manager->filename, a_name);
+	if (manager->otool)
+	{
+		if (a_name)
+			ft_printf("%s (architecture %s):\n", manager->filename, a_name);
+		else
+			ft_printf("%s:\n", manager->filename);
+	}
 	else
-		ft_printf("\n%s (for architecture ):\n", manager->filename);
+	{
+		if (a_name)
+			ft_printf("\n%s (for architecture %s):\n", manager->filename, a_name);
+		else
+			ft_printf("\n%s (for architecture ):\n", manager->filename);
+	}
 }
 
 static int					all_fat_64(t_manager *manager,
@@ -42,10 +52,13 @@ static int					all_fat_64(t_manager *manager,
 		manager->file = manager->file_tmp;
 		manager->file += *(uint32_t*)
 				(swap(&offset, &arch[i].offset, sizeof(uint32_t)));
+		manager->ppc = is_ppc(&arch[i].cputype);
 		print_file_arch_name(manager, &arch[i].cputype);
 		if (manager->funct(manager) != TRUE)
 			return (ERROR);
 		i++;
+		if (manager->otool && i < nfat_arch_ind)
+			ft_printf("\n");
 	}
 	return (TRUE);
 }
@@ -65,10 +78,13 @@ static int					all_fat_32(t_manager *manager,
 		manager->file = manager->file_tmp;
 		swap(&offset, &arch[i].offset, sizeof(uint32_t));
 		manager->file += offset;
+		manager->ppc = is_ppc(&arch[i].cputype);
 		print_file_arch_name(manager, &arch[i].cputype);
 		if (manager->funct(manager) != TRUE)
 			return (ERROR);
 		i++;
+		if (manager->otool)
+			ft_printf("\n");
 	}
 	return (TRUE);
 }
@@ -83,6 +99,7 @@ int							study_fat_64(t_manager *manager)
 	i = 0;
 	ft_bzero(&temp, sizeof(struct fat_arch));
 	nfat_arch = get_arch_nb(manager);
+	manager->lib = 1;
 	arch = (struct fat_arch_64*)(manager->file + sizeof(struct fat_header));
 	while (i < nfat_arch)
 	{
@@ -108,6 +125,7 @@ int							study_fat_32(t_manager *manager)
 	i = 0;
 	ft_bzero(&temp, sizeof(struct fat_arch));
 	nfat_arch = get_arch_nb(manager);
+	manager->lib = 1;
 	arch = (struct fat_arch*)((void*)manager->file + sizeof(struct fat_header));
 	while (i < nfat_arch)
 	{

@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+#NM="nm"
+#NM_PERSO="./ft_nm"
+
 NM="otool -t"
 NM_PERSO="./ft_otool"
 

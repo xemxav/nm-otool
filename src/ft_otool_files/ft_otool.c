@@ -27,6 +27,7 @@ static int						handle_64(t_manager *manager)
 	manager->header_size = sizeof(struct mach_header_64);
 	if (find_text_64(manager) <= 0)
 		return (ERROR);
+	manager->swap = 0;
 	return (TRUE);
 }
 
@@ -45,6 +46,7 @@ static int						handle_32(t_manager *manager)
 	manager->header_size = sizeof(struct mach_header);
 	if (find_text_32(manager) <= 0)
 		return (ERROR);
+	manager->swap = 0;
 	return (TRUE);
 }
 
@@ -60,11 +62,10 @@ int							otool(t_manager *manager)
 		return (handle_32(manager));
 	else if (ft_strncmp(ARMAG, manager->file, SARMAG) == 0)
 		return (study_lib(manager));
-//	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
-//		return (study_fat_32(manager));
-//	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
-//		return (study_fat_64(manager));
-//	return (FALSE);
+	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
+		return (study_fat_32(manager));
+	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
+		return (study_fat_64(manager));
 	return (FALSE);
 }
 

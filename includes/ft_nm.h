@@ -63,6 +63,7 @@ typedef struct				s_manager
 	uint32_t				ncmds;
 	struct s_symbol			*symbol_list;
 	struct s_libfile		*libstart;
+	int						ppc;
 }							t_manager;
 
 t_arch_name					g_name_list[13];
@@ -100,6 +101,7 @@ int							study_fat_32(t_manager *manager);
 */
 uint32_t					get_arch_nb(t_manager *manager);
 char						*get_arch_name(cpu_type_t type);
+int							is_ppc(cpu_type_t *cputype);
 /*
 **			study_lib.c
 */
