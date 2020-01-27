@@ -13,40 +13,6 @@
 
 #include "../../includes/ft_nm.h"
 
-static int				print_text_64_ppc(t_manager *manager, uint32_t offset,
-											uint32_t size, uint64_t init_addr)
-{
-	uint64_t			adr;
-	uint32_t			*byte;
-	uint32_t			*end;
-	uint32_t			temp;
-	int					y;
-
-	adr = 0;
-	byte = (uint32_t*)(manager->file + offset);
-	end = (uint32_t*)(manager->file + offset + size);
-	while (101)
-	{
-		y = 0;
-		while (y < 4)
-		{
-			if (byte == end)
-				return (TRUE);
-			ft_memcpy(&temp, byte, sizeof(uint32_t));
-			if (manager->swap)
-				swap(&temp, byte, sizeof(uint32_t));
-			if (y == 0)
-				ft_printf("%.16llx\t%.8x ", adr + init_addr, temp);
-			else
-				ft_printf("%.8x ", temp);
-			y++;
-			byte++;
-		}
-		adr += 16;
-		ft_printf("\n");
-	}
-}
-
 static int				print_text_64(t_manager *manager, uint32_t offset,
 		uint64_t size, uint64_t init_adrr)
 {
@@ -81,7 +47,6 @@ static int				manage_section_64(t_manager *manager,
 	uint32_t			offset;
 	uint64_t			size;
 	uint64_t			addr;
-
 
 	ft_memcpy(&offset, &section->offset, sizeof(uint32_t));
 	ft_memcpy(&size, &section->size, sizeof(uint64_t));

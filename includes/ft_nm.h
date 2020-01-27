@@ -144,6 +144,11 @@ int							find_text_64(t_manager *manager);
 **			otool_32.c
 */
 int							find_text_32(t_manager *manager);
-
-
+/*
+**			print_ppc.c
+*/
+int						print_text_32_ppc(t_manager *manager, uint32_t offset,
+		uint32_t size, uint32_t init_addr);
+int						print_text_64_ppc(t_manager *manager, uint32_t offset,
+		uint32_t size, uint64_t init_addr);
 #endif

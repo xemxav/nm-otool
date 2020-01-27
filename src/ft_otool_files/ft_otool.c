@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_otool_files.c                                       .::    .:/ .      .::   */
+/*   ft_otool.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2020/01/24 15:10:20 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/24 15:10:20 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/27 17:13:31 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/27 17:13:31 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../includes/ft_nm.h"
 
-static int						handle_64(t_manager *manager)
+static int					handle_64(t_manager *manager)
 {
-	struct mach_header_64		*header;
+	struct mach_header_64	*header;
 
 	header = (struct mach_header_64*)manager->file;
 	manager->ncmds = header->ncmds;
@@ -31,9 +31,9 @@ static int						handle_64(t_manager *manager)
 	return (TRUE);
 }
 
-static int						handle_32(t_manager *manager)
+static int					handle_32(t_manager *manager)
 {
-	struct mach_header			*header;
+	struct mach_header		*header;
 
 	header = (struct mach_header*)manager->file;
 	if (*(uint32_t*)manager->file == MH_CIGAM)
