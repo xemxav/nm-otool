@@ -14,7 +14,7 @@
 #include "../../includes/ft_nm.h"
 
 static int				print_text_32(t_manager *manager, uint32_t offset,
-		uint32_t size)
+		uint32_t size, uint32_t init_addr)
 {
 	uint32_t			adr;
 	uint8_t				*byte;
@@ -32,7 +32,7 @@ static int				print_text_32(t_manager *manager, uint32_t offset,
 			if (adr == size)
 				return (ft_printf("\n"));
 			if (y == 0)
-				ft_printf("%.8llx\t%.2x ", adr, byte[adr]);
+				ft_printf("%.8llx\t%.2x ", adr + init_addr, byte[adr]);
 			if (y == 15)
 				ft_printf("%.2x \n", byte[adr]);
 			if (y > 0 && y < 15)
@@ -48,15 +48,18 @@ static int				manage_section_32(t_manager *manager,
 {
 	uint32_t			offset;
 	uint32_t			size;
+	uint32_t			addr;
 
 	ft_memcpy(&offset, &section->offset, sizeof(uint32_t));
 	ft_memcpy(&size, &section->size, sizeof(uint32_t));
+	ft_memcpy(&addr, &section->addr, sizeof(uint32_t));
 	if (manager->swap)
 	{
 		swap(&offset, &section->offset, sizeof(uint32_t));
 		swap(&size, &section->size, sizeof(uint32_t));
+		swap(&addr, &section->addr, sizeof(uint32_t));
 	}
-	return (print_text_32(manager, offset, size));
+	return (print_text_32(manager, offset, size, addr));
 }
 
 static int				find_text_section_32(t_manager *manager,
