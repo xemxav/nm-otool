@@ -13,9 +13,9 @@
 
 #include "../../includes/ft_nm.h"
 
-static int							handle_64(t_manager *manager)
+static int						handle_64(t_manager *manager)
 {
-	struct mach_header_64	*header;
+	struct mach_header_64		*header;
 
 	header = (struct mach_header_64*)manager->file;
 	manager->ncmds = header->ncmds;
@@ -27,12 +27,12 @@ static int							handle_64(t_manager *manager)
 	manager->header_size = sizeof(struct mach_header_64);
 	if (find_text_64(manager) <= 0)
 		return (ERROR);
-	return (FALSE);
+	return (TRUE);
 }
 
-static int							handle_32(t_manager *manager)
+static int						handle_32(t_manager *manager)
 {
-	struct mach_header	*header;
+	struct mach_header			*header;
 
 	if (manager->file_tmp == NULL)
 		manager->file_tmp = manager->file;
@@ -45,7 +45,9 @@ static int							handle_32(t_manager *manager)
 	else
 		manager->ncmds = header->ncmds;
 	manager->header_size = sizeof(struct mach_header);
-	return (FALSE);
+	if (find_text_32(manager) <= 0)
+		return (ERROR);
+	return (TRUE);
 }
 
 int							otool(t_manager *manager)
