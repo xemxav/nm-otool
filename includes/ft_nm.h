@@ -130,8 +130,14 @@ uint32_t					add_nsect(uint32_t *nsects, int swap);
 void						*swap(void *tmp, void *value, size_t size);
 int							free_manager(t_manager *manager, int ret);
 t_symbol					*free_symbols(t_symbol *head);
-
-int					find_text_64(t_manager *manager);
+/*
+**			otool_64.c
+*/
+int							find_text_64(t_manager *manager);
+/*
+**			otool_32.c
+*/
+int							find_text_32(t_manager *manager);
 
 
 #endif
