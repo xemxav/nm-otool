@@ -91,11 +91,11 @@ re: fclean all
 lib:
 	@make -C $(PATH_LIB)
 
-$(FT_NM): $(PATH_OBJ) $(PATH_OBJ_SHARED) $(PATH_OBJ_NM) $(OBJ_SHARED) $(OBJ_NM)
+$(FT_NM): $(PATH_OBJ) $(PATH_OBJ_SHARED) $(OBJ_SHARED)  $(PATH_OBJ_NM) $(OBJ_NM)
 	$(CC) $(CFLAGS) $(OBJ_SHARED) $(OBJ_NM) -I $(PATH_INC) $(INC_LIB) -o $(FT_NM)
 	echo "$(FT_NM) has been compiled"
 
-$(FT_OTOOL): $(PATH_OBJ)  $(PATH_OBJ_SHARED) $(PATH_OBJ_OTOOL) $(OBJ_SHARED) $(OBJ_OTOOL)
+$(FT_OTOOL): $(PATH_OBJ)  $(PATH_OBJ_SHARED) $(OBJ_SHARED) $(PATH_OBJ_OTOOL)  $(OBJ_OTOOL)
 	$(CC) $(CFLAGS) $(OBJ_SHARED) $(OBJ_OTOOL)  -I $(PATH_INC) $(INC_LIB) -o $(FT_OTOOL)
 	echo "$(FT_OTOOL) has been compiled"
 
