@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 void			study_type(t_symbol *symbol, uint8_t n_type)
 {

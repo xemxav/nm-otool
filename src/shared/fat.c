@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 static void					print_file_arch_name(t_manager *manager,
 		cpu_type_t *cputype)
@@ -43,7 +43,7 @@ static int					all_fat_64(t_manager *manager,
 {
 	uint32_t				offset;
 	struct fat_arch_64		*arch;
-	int						i;
+	uint32_t				i;
 
 	i = 0;
 	manager->file_tmp = manager->file;
@@ -69,7 +69,7 @@ static int					all_fat_32(t_manager *manager,
 {
 	uint32_t				offset;
 	struct fat_arch			*arch;
-	int						i;
+	uint32_t				i;
 
 	i = 0;
 	manager->file_tmp = manager->file;
@@ -95,7 +95,7 @@ int							study_fat_64(t_manager *manager)
 	struct fat_arch_64		*arch;
 	struct fat_arch_64		temp;
 	uint32_t				nfat_arch;
-	int						i;
+	uint32_t				i;
 
 	i = 0;
 	ft_bzero(&temp, sizeof(struct fat_arch));

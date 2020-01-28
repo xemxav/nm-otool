@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 void			*swap(void *tmp, void *value, size_t size)
 {

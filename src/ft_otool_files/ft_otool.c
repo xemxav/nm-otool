@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 static int					handle_64(t_manager *manager)
 {

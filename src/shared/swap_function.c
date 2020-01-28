@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 struct load_command		*swap_lc(struct load_command *temp,
 		struct load_command *lc)

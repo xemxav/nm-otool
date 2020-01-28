@@ -11,11 +11,11 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 int							find_lc_symtab(t_manager *manager)
 {
-	int						i;
+	uint32_t				i;
 	struct load_command		*lc;
 	struct load_command		lc_temp;
 

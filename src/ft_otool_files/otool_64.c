@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 static int				print_text_64(t_manager *manager, uint32_t offset,
 		uint64_t size, uint64_t init_adrr)
@@ -72,7 +72,7 @@ static int				find_text_section_64(t_manager *manager,
 {
 	struct section_64			*section;
 	uint32_t					nsects;
-	int							i;
+	uint32_t					i;
 
 	i = 0;
 	nsects = segment->nsects;
@@ -92,7 +92,7 @@ static int				find_text_section_64(t_manager *manager,
 
 int						find_text_64(t_manager *manager)
 {
-	int							i;
+	uint32_t					i;
 	struct load_command			*lc;
 	struct load_command			lc_temp;
 

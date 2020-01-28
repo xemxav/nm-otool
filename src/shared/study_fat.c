@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 t_arch_name g_name_list[] = {
 	{CPU_TYPE_MC680x0, "mc680x0"},

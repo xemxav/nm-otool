@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 struct section_64		*find_sec_in_seg_64(t_manager *manager,
 		struct segment_command_64 *segment, uint32_t sum_sects, uint32_t n_sect)
@@ -31,7 +31,7 @@ struct section_64		*find_sec_in_seg_64(t_manager *manager,
 
 struct section_64		*find_section_64(uint8_t n_sect, t_manager *manager)
 {
-	int							i;
+	uint32_t					i;
 	struct load_command			*lc;
 	struct load_command			lc_temp;
 	struct segment_command_64	*seg;
@@ -86,7 +86,7 @@ int						fill_symbol_64(t_symbol *symbol, t_manager *manager,
 
 int						read_symtab_64(t_manager *manager)
 {
-	int					i;
+	uint32_t			i;
 	struct nlist_64		*el;
 	struct nlist_64		el_temp;
 	t_symbol			symbol;

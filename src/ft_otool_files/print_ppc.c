@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../includes/ft_nm.h"
+#include "../../includes/nm_otool.h"
 
 static void				by_byte_32_ppc(t_manager *manager, int y,
 		uint32_t *byte, uint32_t adr)
