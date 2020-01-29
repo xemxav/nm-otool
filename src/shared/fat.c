@@ -84,7 +84,7 @@ static int					all_fat_32(t_manager *manager,
 		if (manager->funct(manager) != TRUE)
 			return (ERROR);
 		i++;
-		if (manager->otool)
+		if (manager->otool && i < nfat_arch_ind)
 			ft_printf("\n");
 	}
 	return (TRUE);
@@ -106,7 +106,12 @@ int							study_fat_64(t_manager *manager)
 	{
 		if (*(cpu_type_t*)swap(&(temp.cputype), &arch[i].cputype,
 				sizeof(cpu_type_t)) == CPU_TYPE_X86_64)
+		{
 			swap(&(temp.offset), &arch[i].offset, sizeof(uint64_t));
+			if (manager->otool)
+				ft_printf("%s:\n",manager->filename);
+			break;
+		}
 		i++;
 	}
 	if (temp.offset)
@@ -134,6 +139,8 @@ int							study_fat_32(t_manager *manager)
 				sizeof(cpu_type_t)) == CPU_TYPE_X86_64)
 		{
 			swap(&(temp.offset), &arch[i].offset, sizeof(uint32_t));
+			if (manager->otool)
+				ft_printf("%s:\n",manager->filename);
 			break ;
 		}
 		i++;
