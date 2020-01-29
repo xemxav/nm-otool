@@ -92,21 +92,21 @@ lib:
 	@make -C $(PATH_LIB)
 
 $(FT_NM): $(PATH_OBJ) $(PATH_OBJ_SHARED) $(OBJ_SHARED)  $(PATH_OBJ_NM) $(OBJ_NM)
-	$(CC) $(CFLAGS) $(OBJ_SHARED) $(OBJ_NM) -I $(PATH_INC) $(INC_LIB) -o $(FT_NM)
-	echo "$(FT_NM) has been compiled"
+	@$(CC) $(CFLAGS) $(OBJ_SHARED) $(OBJ_NM) -I $(PATH_INC) $(INC_LIB) -o $(FT_NM)
+	@echo "$(FT_NM) has been compiled"
 
 $(FT_OTOOL): $(PATH_OBJ)  $(PATH_OBJ_SHARED) $(OBJ_SHARED) $(PATH_OBJ_OTOOL)  $(OBJ_OTOOL)
-	$(CC) $(CFLAGS) $(OBJ_SHARED) $(OBJ_OTOOL)  -I $(PATH_INC) $(INC_LIB) -o $(FT_OTOOL)
-	echo "$(FT_OTOOL) has been compiled"
+	@$(CC) $(CFLAGS) $(OBJ_SHARED) $(OBJ_OTOOL)  -I $(PATH_INC) $(INC_LIB) -o $(FT_OTOOL)
+	@echo "$(FT_OTOOL) has been compiled"
 
 $(PATH_OBJ_SHARED)%.o: $(PATH_SRC_SHARED)%.c $(HEADER) $(LIB)
-	$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
 
 $(PATH_OBJ_OTOOL)%.o: $(PATH_SRC_OTOOL)%.c $(HEADER) $(LIB)
-	$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
 
 $(PATH_OBJ_NM)%.o: $(PATH_SRC_NM)%.c $(HEADER) $(LIB)
-	$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(PATH_INC) -I $(PATH_INC_LIB) -c $< -o $@
 
 $(PATH_OBJ):
 	@mkdir -p $(PATH_OBJ)
