@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   nm.h                                             .::    .:/ .      .::   */
+/*   nm_otool.h                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: xmoreau <xmoreau@student.le-101.fr>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/14 13:16:55 by xmoreau      #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/14 13:16:55 by xmoreau     ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/29 11:33:15 by xmoreau      #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/29 11:34:58 by xmoreau     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef FT_NM_H
-# define FT_NM_H
+#ifndef NM_OTOOL_H
+# define NM_OTOOL_H
 # include "../libft/includes/libft.h"
 # include <sys/mman.h>
 # include <sys/stat.h>
@@ -53,11 +53,11 @@ typedef struct				s_manager
 	char					*file;
 	char					*file_tmp;
 	int						(*funct)(struct s_manager *);
-	int 					otool;
+	int						otool;
 	int						fd;
 	struct stat				buf;
 	int						swap;
-	int 					lib;
+	int						lib;
 	struct symtab_command	symtab;
 	size_t					header_size;
 	uint32_t				ncmds;
@@ -133,6 +133,7 @@ uint32_t					add_nsect(uint32_t *nsects, int swap);
 /*
 **			utils.c
 */
+int 						check_string(char *s);
 void						*swap(void *tmp, void *value, size_t size);
 int							free_manager(t_manager *manager, int ret);
 t_symbol					*free_symbols(t_symbol *head);
@@ -147,8 +148,8 @@ int							find_text_32(t_manager *manager);
 /*
 **			print_ppc.c
 */
-int						print_text_32_ppc(t_manager *manager, uint32_t offset,
-		uint32_t size, uint32_t init_addr);
-int						print_text_64_ppc(t_manager *manager, uint32_t offset,
-		uint32_t size, uint64_t init_addr);
+int							print_text_32_ppc(t_manager *manager,
+		uint32_t offset, uint32_t size, uint32_t init_addr);
+int							print_text_64_ppc(t_manager *manager,
+		uint32_t offset, uint32_t size, uint64_t init_addr);
 #endif

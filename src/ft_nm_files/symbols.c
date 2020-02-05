@@ -16,41 +16,47 @@
 void			print_symbols_64(t_manager *manager)
 {
 	t_symbol	*symbol;
-	t_symbol	*tmp;
 
 	symbol = manager->symbol_list;
 	while (symbol != NULL)
 	{
-		if (symbol->sym_type != 'u' && symbol->sym_type != 'U')
+		if (!check_string(symbol->sym_name))
+			return ;
+		if (symbol->sym_type != 'u' && symbol->sym_type != 'U' &&
+		symbol->sym_type != 'i' && symbol->sym_type != 'I')
 			ft_printf("%.16llx", symbol->value64);
 		else
 			ft_printf("%16c", ' ');
-		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
-		tmp = symbol;
+		if (symbol->sym_type == 'i' || symbol->sym_type == 'I')
+			ft_printf(" %c %s (indirect for %s)\n", symbol->sym_type,
+					symbol->sym_name, symbol->sym_name);
+		else
+			ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
 		symbol = symbol->next;
-		free(tmp);
 	}
-	manager->symbol_list = NULL;
 }
 
 void			print_symbols_32(t_manager *manager)
 {
 	t_symbol	*symbol;
-	t_symbol	*tmp;
 
 	symbol = manager->symbol_list;
 	while (symbol != NULL)
 	{
-		if (symbol->sym_type != 'u' && symbol->sym_type != 'U')
+		if (!check_string(symbol->sym_name))
+			return ;
+		if (symbol->sym_type != 'u' && symbol->sym_type != 'U' &&
+		symbol->sym_type != 'i' && symbol->sym_type != 'I')
 			ft_printf("%.8x", symbol->value32);
 		else
 			ft_printf("%8c", ' ');
-		ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
-		tmp = symbol;
+		if (symbol->sym_type == 'i' || symbol->sym_type == 'I')
+			ft_printf(" %c %s (indirect for %s)\n",
+					symbol->sym_type, symbol->sym_name, symbol->sym_name);
+		else
+			ft_printf(" %c %s\n", symbol->sym_type, symbol->sym_name);
 		symbol = symbol->next;
-		free(tmp);
 	}
-	manager->symbol_list = NULL;
 }
 
 static void		insert_symbol(t_manager *manager, t_symbol *new)

@@ -95,6 +95,7 @@ int						find_text_64(t_manager *manager)
 	uint32_t					i;
 	struct load_command			*lc;
 	struct load_command			lc_temp;
+//	struct segment_command_64	*seg;
 
 	i = 0;
 	lc = (struct load_command*)((void*)manager->file + manager->header_size);

@@ -56,7 +56,7 @@ static int					handle_64(t_manager *manager)
 		manager->swap = 0;
 		return (TRUE);
 	}
-	return (FALSE);
+	return (ERROR);
 }
 
 static int					handle_32(t_manager *manager)
@@ -77,7 +77,7 @@ static int					handle_32(t_manager *manager)
 		manager->swap = 0;
 		return (TRUE);
 	}
-	return (FALSE);
+	return (ERROR);
 }
 
 int							nm(t_manager *manager)
@@ -107,13 +107,13 @@ int							main(int ac, char **av)
 	i = 1;
 	ret = 0;
 	if (ac == 1)
-		ret = open_file("a.out", "ft_nm_files", &nm, 0);
+		ret = open_file("a.out", "ft_nm", &nm, 0);
 	else
 	{
 		several = (ac > 2) ? 1 : 0;
 		while (i < ac && ret != ERROR)
 		{
-			ret = open_file(av[i], "ft_nm_files", &nm, several);
+			ret = open_file(av[i], "ft_nm", &nm, several);
 			i++;
 		}
 	}

@@ -53,7 +53,7 @@ int				open_file(char *name, char *prog, int funct(t_manager *),
 		if (several)
 			ft_printf("\n%s:\n", name);
 		if (manager.funct(&manager) == FALSE)
-			ft_printf("%s: %s The file was not "
+			fd_printf(2,"%s: %s The file was not "
 			"recognized as a valid object file\n", prog, name);
 	}
 	return (free_manager(&manager, ret));

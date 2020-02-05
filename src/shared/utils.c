@@ -13,6 +13,18 @@
 
 #include "../../includes/nm_otool.h"
 
+int 			check_string(char *s)
+{
+	int			stop;
+
+	stop = 0;
+	while (s[stop] != '\0' && stop < 538)
+		stop++;
+	if (stop < 538)
+		return (TRUE);
+	return (FALSE);
+}
+
 void			*swap(void *tmp, void *value, size_t size)
 {
 	ft_memcpy(tmp, value, size);

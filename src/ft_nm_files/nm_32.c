@@ -104,5 +104,7 @@ int					read_symtab_32(t_manager *manager)
 		i++;
 	}
 	print_symbols_32(manager);
+	free_symbols(manager->symbol_list);
+	manager->symbol_list = NULL;
 	return (TRUE);
 }

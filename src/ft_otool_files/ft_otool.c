@@ -73,7 +73,6 @@ int							main(int ac, char **av)
 {
 	int						i;
 	int						ret;
-	int						several;
 
 	i = 1;
 	ret = 0;
@@ -81,10 +80,9 @@ int							main(int ac, char **av)
 		ret = open_file("a.out", "ft_otool_files", &otool, 0);
 	else
 	{
-		several = (ac > 2) ? 1 : 0;
 		while (i < ac && ret != ERROR)
 		{
-			ret = open_file(av[i], "ft_otool_files", &otool, several);
+			ret = open_file(av[i], "ft_otool_files", &otool, 0);
 			i++;
 		}
 	}

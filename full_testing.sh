@@ -3,6 +3,9 @@
 NM="nm"
 NM_PERSO="./ft_nm"
 
+#NM="otool -t"
+#NM_PERSO="./ft_otool"
+
 testing_todo()
 {
 FILE="result_$1"
