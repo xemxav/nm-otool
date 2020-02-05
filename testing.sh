@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 
-NM="nm"
-NM_PERSO="./ft_nm"
+#NM="nm"
+#NM_PERSO="./ft_nm"
 
-#NM="otool -t"
-#NM_PERSO="./ft_otool"
+NM="otool -t"
+NM_PERSO="./ft_otool"
 
-test_nm()
+testing()
 {
   echo $1
   eval ${NM_PERSO} $1 > my_result.txt
@@ -23,4 +23,4 @@ test_nm()
 
 }
 
-test_nm $1
+testing $1
