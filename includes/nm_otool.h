@@ -101,7 +101,7 @@ int							study_fat_32(t_manager *manager);
 */
 uint32_t					get_arch_nb(t_manager *manager);
 char						*get_arch_name(cpu_type_t type);
-int							is_ppc(cpu_type_t *cputype);
+int							is_ppc(t_manager *manager, cpu_type_t *cputype);
 /*
 **			study_lib.c
 */

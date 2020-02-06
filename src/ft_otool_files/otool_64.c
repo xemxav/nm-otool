@@ -62,6 +62,8 @@ static int				manage_section_64(t_manager *manager,
 				manager->filename);
 	else
 		ft_printf("Contents of (__TEXT,__text) section\n");
+	if (!size)
+		return (TRUE);
 	if (manager->ppc)
 		return (print_text_64_ppc(manager, offset, size, addr));
 	return (print_text_64(manager, offset, size, addr));
@@ -95,7 +97,6 @@ int						find_text_64(t_manager *manager)
 	uint32_t					i;
 	struct load_command			*lc;
 	struct load_command			lc_temp;
-//	struct segment_command_64	*seg;
 
 	i = 0;
 	lc = (struct load_command*)((void*)manager->file + manager->header_size);

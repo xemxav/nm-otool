@@ -62,6 +62,8 @@ static int				manage_section_32(t_manager *manager,
 				manager->filename);
 	else
 		ft_printf("Contents of (__TEXT,__text) section\n");
+	if (!size)
+		return (TRUE);
 	if (manager->ppc)
 		return (print_text_32_ppc(manager, offset, size, addr));
 	return (print_text_32(manager, offset, size, addr));

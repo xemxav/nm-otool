@@ -53,7 +53,7 @@ static int					all_fat_64(t_manager *manager,
 		manager->file = manager->file_tmp;
 		manager->file += *(uint32_t*)
 				(swap(&offset, &arch[i].offset, sizeof(uint32_t)));
-		manager->ppc = is_ppc(&arch[i].cputype);
+//		manager->ppc = is_ppc(&arch[i].cputype);
 		print_file_arch_name(manager, &arch[i].cputype);
 		if (manager->funct(manager) != TRUE)
 			return (ERROR);
@@ -79,7 +79,7 @@ static int					all_fat_32(t_manager *manager,
 		manager->file = manager->file_tmp;
 		swap(&offset, &arch[i].offset, sizeof(uint32_t));
 		manager->file += offset;
-		manager->ppc = is_ppc(&arch[i].cputype);
+//		manager->ppc = is_ppc(&arch[i].cputype);
 		print_file_arch_name(manager, &arch[i].cputype);
 		if (manager->funct(manager) != TRUE)
 			return (ERROR);

@@ -53,11 +53,13 @@ char					*get_arch_name(cpu_type_t type)
 	return (NULL);
 }
 
-int						is_ppc(cpu_type_t *cputype)
+int						is_ppc(t_manager *manager, cpu_type_t *cputype)
 {
 	cpu_type_t				type;
 
-	swap(&type, cputype, sizeof(cpu_type_t));
+	ft_memcpy(&type, cputype, sizeof(cpu_type_t));
+	if (manager->swap)
+		swap(&type, cputype, sizeof(cpu_type_t));
 	if (type == CPU_TYPE_POWERPC64 || type == CPU_TYPE_POWERPC ||
 	type == CPU_TYPE_ARM64 || type == CPU_TYPE_ARM)
 		return (TRUE);

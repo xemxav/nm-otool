@@ -44,7 +44,7 @@ int						print_text_32_ppc(t_manager *manager, uint32_t offset,
 		while (y < 4)
 		{
 			if (byte == end)
-				return (TRUE);
+				return (ft_printf("\n"));
 			by_byte_32_ppc(manager, y, byte, adr + init_addr);
 			y++;
 			byte++;
@@ -85,7 +85,7 @@ int						print_text_64_ppc(t_manager *manager, uint32_t offset,
 		while (y < 4)
 		{
 			if (byte == end)
-				return (TRUE);
+				return (ft_printf("\n"));
 			by_byte_64_ppc(manager, y, byte, adr + init_addr);
 			y++;
 			byte++;

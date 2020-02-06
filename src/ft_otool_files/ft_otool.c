@@ -24,6 +24,7 @@ static int					handle_64(t_manager *manager)
 		manager->swap = 1;
 		swap(&manager->ncmds, &header->ncmds, sizeof(uint32_t));
 	}
+	manager->ppc = is_ppc(manager, &header->cputype);
 	manager->header_size = sizeof(struct mach_header_64);
 	if (find_text_64(manager) <= 0)
 		return (ERROR);
@@ -43,6 +44,7 @@ static int					handle_32(t_manager *manager)
 	}
 	else
 		manager->ncmds = header->ncmds;
+	manager->ppc = is_ppc(manager, &header->cputype);
 	manager->header_size = sizeof(struct mach_header);
 	if (find_text_32(manager) <= 0)
 		return (ERROR);
@@ -77,12 +79,12 @@ int							main(int ac, char **av)
 	i = 1;
 	ret = 0;
 	if (ac == 1)
-		ret = open_file("a.out", "ft_otool_files", &otool, 0);
+		ret = open_file("a.out", "ft_otool", &otool, 0);
 	else
 	{
 		while (i < ac && ret != ERROR)
 		{
-			ret = open_file(av[i], "ft_otool_files", &otool, 0);
+			ret = open_file(av[i], "ft_otool", &otool, 0);
 			i++;
 		}
 	}
