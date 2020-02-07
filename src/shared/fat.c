@@ -54,13 +54,10 @@ static int					all_fat_64(t_manager *manager,
 		manager->file = manager->file_tmp;
 		manager->file += *(uint32_t*)
 				(swap(&offset, &arch[i].offset, sizeof(uint32_t)));
-//		manager->ppc = is_ppc(&arch[i].cputype);
 		print_file_arch_name(manager, &arch[i].cputype);
 		if (manager->funct(manager) != TRUE)
 			return (ERROR);
 		i++;
-//		if (manager->otool && i < nfat_arch_ind)
-//			ft_printf("\n");
 	}
 	return (TRUE);
 }
@@ -81,13 +78,10 @@ static int					all_fat_32(t_manager *manager,
 		manager->file = manager->file_tmp;
 		swap(&offset, &arch[i].offset, sizeof(uint32_t));
 		manager->file += offset;
-//		manager->ppc = is_ppc(&arch[i].cputype);
 		print_file_arch_name(manager, &arch[i].cputype);
 		if (manager->funct(manager) != TRUE)
 			return (ERROR);
 		i++;
-//		if (manager->otool && i < nfat_arch_ind)
-//			ft_printf("\n");
 	}
 	return (TRUE);
 }
@@ -106,9 +100,9 @@ int							study_fat_64(t_manager *manager)
 	while (i < nfat_arch)
 	{
 		if (*(cpu_type_t*)swap(&(temp.cputype), &arch[i].cputype,
-							   sizeof(cpu_type_t)) == CPU_TYPE_X86_64 &&
+				sizeof(cpu_type_t)) == CPU_TYPE_X86_64 &&
 			*(cpu_subtype_t*)swap(&(temp.cpusubtype), &arch[i].cpusubtype,
-								  sizeof(cpu_subtype_t)) != 8)
+					sizeof(cpu_subtype_t)) != 8)
 		{
 			swap(&(temp.offset), &arch[i].offset, sizeof(uint64_t));
 			manager->file += temp.offset;
@@ -126,15 +120,12 @@ int							study_fat_32(t_manager *manager)
 	struct fat_arch			temp;
 	uint32_t				nfat_arch;
 	uint32_t				i;
-	struct fat_arch			*arch2;
 
 	i = 0;
-//	ft_bzero(&temp, sizeof(struct fat_arch));
 	nfat_arch = get_arch_nb(manager);
 	arch = (struct fat_arch*)((void*)manager->file + sizeof(struct fat_header));
 	while (i < nfat_arch)
 	{
-		arch2 = arch + i;
 		ft_bzero(&temp, sizeof(struct fat_arch));
 		if (*(cpu_type_t*)swap(&(temp.cputype), &arch[i].cputype,
 				sizeof(cpu_type_t)) == CPU_TYPE_X86_64 &&

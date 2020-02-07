@@ -134,7 +134,7 @@ uint32_t					add_nsect(uint32_t *nsects, int swap);
 /*
 **			utils.c
 */
-int 						check_string(char *s);
+int							check_string(char *s);
 void						*swap(void *tmp, void *value, size_t size);
 int							free_manager(t_manager *manager, int ret);
 t_symbol					*free_symbols(t_symbol *head);

@@ -13,7 +13,7 @@
 
 #include "../../includes/nm_otool.h"
 
-int 			check_string(char *s)
+int				check_string(char *s)
 {
 	int			stop;
 
