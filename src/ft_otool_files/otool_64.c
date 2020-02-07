@@ -57,11 +57,11 @@ static int				manage_section_64(t_manager *manager,
 		swap(&size, &section->size, sizeof(uint64_t));
 		swap(&addr, &section->addr, sizeof(uint64_t));
 	}
-	if (!manager->lib)
+	if (manager->lib)
+		ft_printf("Contents of (__TEXT,__text) section\n");
+	else
 		ft_printf("%s:\nContents of (__TEXT,__text) section\n",
 				manager->filename);
-	else
-		ft_printf("Contents of (__TEXT,__text) section\n");
 	if (!size)
 		return (TRUE);
 	if (manager->ppc)

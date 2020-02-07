@@ -58,6 +58,7 @@ typedef struct				s_manager
 	struct stat				buf;
 	int						swap;
 	int						lib;
+	int						fat;
 	struct symtab_command	symtab;
 	size_t					header_size;
 	uint32_t				ncmds;

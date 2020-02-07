@@ -44,6 +44,7 @@ then
 fi
 while IFS="" read -r p || [ -n "$p" ]
 do
+  echo $p
   testing $p >> $FILE
 done < $1
 }
